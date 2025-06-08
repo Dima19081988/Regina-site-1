@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import '../styles/header.css';
 import logo from '../assets/logos/logo.png'
 
@@ -9,11 +10,12 @@ export const Header: React.FC = () => {
                 <img src={logo} alt="Логотип" style={{ maxHeight: '50px' }}/>
             </div>
             <nav className="header__nav">
-                <a href="#biografy">Биография</a>
-                <a href="#portfolio">Портфолио</a>
-                <a href="#articles">Статьи</a>
-                <a href="#pricelist">Прайслист</a>
-                <a href="#contacts">Контакты</a>
+                <Link to="/">Главная страница</Link>
+                <Link to="#biografy">Биография</Link>
+                <Link to="#portfolio">Портфолио</Link>
+                <Link to="#articles">Статьи</Link>
+                <Link to="/pricelist">Прайслист</Link>
+                <Link to="#contacts">Контакты</Link>
             </nav>
             <h1 className="header__title">Ваш косметолог Регина</h1>
         </header>

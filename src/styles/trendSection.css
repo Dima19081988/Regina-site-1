@@ -1,5 +1,9 @@
 .trends-section {
     padding: 20px;
+    background-image: url('/pictures/header-bg2.jpg');
+    height: auto;
+    background-size: cover;
+    background-position: center;
 }
 
 .trends-section__title {
@@ -10,6 +14,7 @@
 
 .trends-section__list {
     display: flex;
+    justify-content: center;
     overflow-x: auto;
     gap: 15px;
     padding-bottom: 10px;
@@ -22,7 +27,7 @@
     padding-bottom: 100%;
     background-size: cover;
     background-position: center;
-    border: 2px solid grey;
+    border: 2px solid rgb(237, 108, 15);
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -31,17 +36,17 @@
     align-items: flex-end;
     padding: 10px;
     font-weight: bold;
-    transition: transform 0.3 ease;
 }
 
 .trend-card:hover {
-    transform: scale(1.05);
+    transform: scale(1.01);
 }
 
 .trend-card__title {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(212, 122, 3, 0.5);
     padding: 5px 8px;
     border-radius: 4px;
     width: 100%;
+    color: black;
     text-align: center;
 }
