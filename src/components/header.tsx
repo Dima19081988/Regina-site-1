@@ -15,7 +15,7 @@ export const Header: React.FC = () => {
                 <a href="#pricelist">Прайслист</a>
                 <a href="#contacts">Контакты</a>
             </nav>
-            <h1 className="header__tittle">Ваш косметолог Регина</h1>
+            <h1 className="header__title">Ваш косметолог Регина</h1>
         </header>
     );
 };
