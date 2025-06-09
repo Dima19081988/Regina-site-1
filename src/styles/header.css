@@ -1,10 +1,11 @@
-.header {
+/* Стили для пользовательского режима */
+.user-mode .header {
     position: relative;
     background-image: url('/pictures/header-bg2.jpg');
     height: 300px;
     background-size: cover;
     background-position: center;
-    color: white;
+    color: rgb(0, 0, 0);
     padding: 20px;
     box-sizing: border-box;
     display: flex;
@@ -12,14 +13,14 @@
     justify-content: center;
 }
 
-.header__logo {
+.user-mode .header__logo {
     position: absolute;
     top: 20px;
     left: 20px;
     display: flex;
 }
 
-.header__nav {
+.user-mode .header__nav {
     position: absolute;
     top: 20px;
     right: 20px;
@@ -28,20 +29,74 @@
     gap: 15px;
 }
 
-.header__nav a {
+.user-mode .header__nav a {
     color: black;
     text-decoration: none;
     font-weight: 500;
 }
 
-.header__nav a:hover {
+.user-mode .header__nav a:hover {
     text-decoration: underline;
 }
 
-.header__title {
+.user-mode .header__title {
     text-align: center;
     font-size: 36px;
     color: black;
     margin: 0 auto;
+    z-index: 1;
+}
+
+.user-mode .header__login-form {
+    position: absolute;
+    top: 40px;
+    right: 20px;
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 8px;
+    max-width: 300px;
+}
+
+/* Стили для админского режима */
+.admin-mode .header {
+    position: relative;
+    background-color: #b99dd4; /* например, темный фон вместо картинки */
+    height: 100px; /* можно изменить высоту */
+    color: #eee;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.admin-mode .header__logo {
+    position: static;
+    display: flex;
+}
+
+.admin-mode .header__nav {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.admin-mode .header__nav a {
+    color: #eee;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.admin-mode .header__nav a:hover {
+    text-decoration: underline;
+}
+
+.admin-mode .header__title {
+    text-align: left;
+    font-size: 28px;
+    color: #f0a500;
+    margin: 0;
     z-index: 1;
 }

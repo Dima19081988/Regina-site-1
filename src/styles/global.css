@@ -1,0 +1,13 @@
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #333;
+}
+
+.user-mode {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.admin-mode {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
