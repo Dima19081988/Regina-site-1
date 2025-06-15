@@ -1,9 +1,9 @@
-import React from "react";
+import React, { Suspense, useState } from "react";
 import { Link } from "react-router-dom";
-import { Login } from "../pages/admin/login";
 import '../styles/header.css';
 import logo from '../assets/logos/logo.png';
 
+const Login = React.lazy(() => import('../pages/admin/login'));
 
 interface HeaderProps {
   isAdmin: boolean;
@@ -32,14 +32,16 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin, isAu
                     <Link to="#articles">Статьи</Link>
                     <Link to="/pricelist">Прайслист</Link>
                     <Link to="#contacts">Контакты</Link>
+                    {!isAuthenticated && !isAdmin && (
+                        <div className="header__login-form">
+                            <Suspense fallback={<div>Загрузка формы входа...</div>}>
+                                <Login onLogin={onLogin} />
+                            </Suspense>
+                        </div>
+                    )}
                 </>
             )}
             </nav>
-            {!isAuthenticated && !isAdmin && (
-                <div className="header__login-form">
-                    <Login onLogin={onLogin}/>
-                </div>
-            )}
             {!isAdmin && <h1 className="header__title">Ваш косметолог Регина</h1>}
         </header>
     );

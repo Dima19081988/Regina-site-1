@@ -1,3 +1,5 @@
+import React from "react";
+import { useState, Suspense } from "react";
 import { Routes, Route, Navigate } from "react-router-dom";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
@@ -5,19 +7,16 @@ import { TrendSection } from "./components/trendSection";
 import { PriceList } from "./pages/priceList";
 import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";
-import { AdminDashboard } from "./pages/admin/adminDashboard";
-import { useState } from "react";
 
-
+const AdminDashboard = React.lazy(() => import('./pages/admin/adminDashboard'));
 
 function App() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const handleLogin = () => {
-    setIsAuthenticated(true);
+  const handleLogin = () => setIsAuthenticated(true);
+  const handleLogout = () => setIsAuthenticated(false);
+  const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
+  return isAuthenticated ? children : <Navigate to="/admin/login" replace />;
   };
-  const handleLogout = () => {
-    setIsAuthenticated(false);
-  } 
 
   return (
     <>
@@ -40,10 +39,16 @@ function App() {
             <Route path="/pricelist" element={<PriceList />}/>
             <Route path="/trend/:id" element={<TrendDetail/>}/>
            {/* Админские маршруты */}
-            <Route path="/admin/dashboard" 
-           element={
-             isAuthenticated ? (<AdminDashboard />) : (<Navigate to="/admin/login" replace/>)}
-           />
+            <Route 
+              path="/admin/dashboard" 
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<div>Загрузка...</div>}>
+                    <AdminDashboard />
+                  </Suspense>
+                </ProtectedRoute>
+              } 
+            />
             <Route path="*" element={<Navigate to={"/"}/>}/>
           </Routes>
         </main>

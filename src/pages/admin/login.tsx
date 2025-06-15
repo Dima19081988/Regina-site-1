@@ -5,7 +5,7 @@ interface LoginProps {
     onLogin: () => void;
 }
 
-export const Login: React.FC<LoginProps> = ({ onLogin }) => {
+const Login: React.FC<LoginProps> = ({ onLogin }) => {
     const [password, setPassword] = useState('');
     const navigate = useNavigate();
 
@@ -35,3 +35,5 @@ export const Login: React.FC<LoginProps> = ({ onLogin }) => {
         </section>
     );
 };
+
+export default Login;
