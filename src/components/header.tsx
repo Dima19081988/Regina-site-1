@@ -1,23 +1,26 @@
 import React, { Suspense, useState } from "react";
 import { Link } from "react-router-dom";
 import '../styles/header.css';
-import logo from '../assets/logos/logo.png';
 
 const Login = React.lazy(() => import('../pages/admin/login'));
 
 interface HeaderProps {
   isAdmin: boolean;
+  isAuthenticated: boolean;
   onLogout: () => void;
   onLogin: () => void;
-  isAuthenticated: boolean;
+
 }
 
-export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin, isAuthenticated }) => {
+export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
+    isAuthenticated }) => {
+    const [loginVisible, setLoginVisible] = useState(false);
+    const toggleLogin = () => setLoginVisible(prev => !prev)
     return (
         <header className={`header ${isAdmin ? 'admin-mode' : 'user-mode'}`}>
-            <div className="header__logo">
-                <img src={logo} alt="Логотип" style={{ maxHeight: '50px' }}/>
-            </div>
+            {/* <div className="header__logo">
+                <img src={logo} alt="Логотип" className="header__logo img"/>
+            </div> */}
             <nav className="header__nav">
                 {isAdmin ? (
                 <>
@@ -26,23 +29,37 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin, isAu
                 </>
                 ) : (
                 <>
-                    <Link to="/">Главная страница</Link>
-                    <Link to="#biografy">Биография</Link>
-                    <Link to="#portfolio">Портфолио</Link>
-                    <Link to="#articles">Статьи</Link>
-                    <Link to="/pricelist">Прайслист</Link>
-                    <Link to="#contacts">Контакты</Link>
-                    {!isAuthenticated && !isAdmin && (
-                        <div className="header__login-form">
-                            <Suspense fallback={<div>Загрузка формы входа...</div>}>
-                                <Login onLogin={onLogin} />
-                            </Suspense>
-                        </div>
-                    )}
+                    <div className="nav-left">
+                        <Link to="/">Главная страница</Link>
+                        <Link to="#biografy">Биография</Link>
+                        <Link to="#portfolio">Портфолио</Link>
+                    </div>
+                    <div className="nav-right">
+                        <Link to="#articles">Статьи</Link>
+                        <Link to="/pricelist">Прайслист</Link>
+                        <Link to="#contacts">Контакты</Link>
+                        {!isAuthenticated && !isAdmin && (
+                            <button
+                                className="login-toggle-button"
+                                onClick={toggleLogin}
+                                aria-expanded={loginVisible}
+                                aria-controls="login-form"
+                            >
+                                Войти        
+                            </button>
+                        )}  
+                    </div>  
                 </>
-            )}
+                )}
+                {loginVisible && !isAuthenticated && !isAdmin && (
+                    <div className="header__login-form" id="login-form">
+                        <Suspense fallback={<div>Загрузка формы входа...</div>}>
+                            <Login onLogin={onLogin} />
+                        </Suspense>
+                    </div>
+                )}
             </nav>
-            {!isAdmin && <h1 className="header__title">Ваш косметолог Регина</h1>}
+            {!isAdmin && <h1 className="header__title"></h1>}
         </header>
     );
 };

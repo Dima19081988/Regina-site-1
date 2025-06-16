@@ -2,6 +2,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   color: #333;
+  background-color: rgba(242, 221, 237, 0.925);
 }
 
 .user-mode {

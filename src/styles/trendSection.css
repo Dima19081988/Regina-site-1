@@ -1,6 +1,6 @@
 .trends-section {
     padding: 20px;
-    background-image: url('/pictures/header-bg2.jpg');
+    background-color: white;
     height: auto;
     background-size: cover;
     background-position: center;
@@ -27,7 +27,7 @@
     padding-bottom: 100%;
     background-size: cover;
     background-position: center;
-    border: 2px solid rgb(237, 108, 15);
+    border: 2px solid rgb(242, 221, 237, 0.925);
     border-radius: 8px;
     text-decoration: none;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
@@ -43,7 +43,7 @@
 }
 
 .trend-card__title {
-    background: rgba(212, 122, 3, 0.5);
+    background: rgb(242, 221, 237, 0.925);
     padding: 5px 8px;
     border-radius: 4px;
     width: 100%;
