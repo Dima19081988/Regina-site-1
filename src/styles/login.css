@@ -1,0 +1,44 @@
+.login-form h2 {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.login-form button[type="submit"] {
+    background-color: rgb(132, 105, 103);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    font-weight: 700;
+    font-size: 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.login-form button[type="submit"]:hover {
+    background-color: #a0217a;
+    transform: scale(1.05);
+}
+
+.login-form button[type="submit"]:active {
+    transform: scale(0.95);
+}
+
+.login-form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    box-sizing: border-box;
+    margin-top: 10px;
+}
+.login-form input[type="password"]:focus{
+    outline: none;
+    border-color: rgba(203, 38, 165, 0.718);
+    box-shadow: 0 0 5px rgba(203, 38, 154, 0.5);
+}

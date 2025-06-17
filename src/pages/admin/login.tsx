@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import { useNavigate } from "react-router-dom";
+import "../../styles/login.css";
 
 interface LoginProps {
     onLogin: () => void;
@@ -20,7 +21,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
     };
 
     return (
-        <section>
+        <section className="login-form">
             <h2>Вход для врача</h2>
             <form onSubmit={handleSubmit}>
                 <input
