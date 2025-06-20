@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import type { AppointmentData, AppointmentFormProps } from "../../../types/appointments";
-import '../styles/appointmentForm.css';
+import "../../../styles/appointmentForm.css";
+
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose }) => {
     const [form, setForm] = useState<AppointmentData>({
@@ -23,7 +24,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if(!form.clientName || !form.service || !form.time) {
+        if(!form.clientName || !form.service || !form.time || !form.price) {
             alert('Нужно заполнить все поля');
             return;
         }
@@ -59,13 +60,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
                 minLength={2}
                 maxLength={50}
             />
-            <label htmlFor="service">Услуга *</label>
+            <label htmlFor="service">Услуга</label>
             <select 
                 id="service"
                 name="service"
                 value={form.service}
                 onChange={handleChange}
-                required 
             >
                 <option value="" disabled>
                     Выберите услугу
@@ -74,7 +74,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
                 <option value="Филлеры">Филлеры</option>
                 <option value="Ботулотоксин">Ботулотоксин</option>
             </select>
-            <label htmlFor="price">Цена *</label>
+            <label htmlFor="price">Цена</label>
             <input
                 id="price"
                 type="number" 
@@ -82,11 +82,18 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
                 placeholder="Введите цену"
                 value={form.price}
                 onChange={handleChange}
-                required
                 min={0}
                 step={0.01}
             />
-            <label htmlFor="comment">Комментарий *</label>
+            <label htmlFor="time">Время записи</label>
+            <input
+                id="time" 
+                type="time" 
+                name="time"
+                value={form.time}
+                onChange={handleChange}
+            />
+            <label htmlFor="comment">Комментарий</label>
             <textarea 
                 id="comment"   
                 name="comment"

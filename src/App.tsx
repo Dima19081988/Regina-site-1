@@ -7,6 +7,7 @@ import { TrendSection } from "./components/trendSection";
 import { PriceList } from "./pages/priceList";
 import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";
+import AppointmentsPage from "./pages/admin/appointments/appointmentPage";
 
 const AdminDashboard = React.lazy(() => import('./pages/admin/adminDashboard'));
 
@@ -48,6 +49,14 @@ function App() {
                   </Suspense>
                 </ProtectedRoute>
               } 
+            />
+            <Route
+              path="/admin/appointments"
+              element={
+                <ProtectedRoute>
+                  <AppointmentsPage />
+                </ProtectedRoute>
+              }
             />
             <Route path="*" element={<Navigate to={"/"}/>}/>
           </Routes>

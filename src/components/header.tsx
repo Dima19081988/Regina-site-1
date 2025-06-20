@@ -25,7 +25,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                 {isAdmin ? (
                 <>
                     <Link to="/admin/dashboard">Панель администратора</Link>
-                    <Link to="/admin/dashboard">Расписание</Link>
+                    <Link to="/admin/appointments">Расписание</Link>
                     <Link to="/admin/dashboard">Заметки</Link>
                     <button className="button logout" onClick={onLogout}>Выйти</button>
                 </>
