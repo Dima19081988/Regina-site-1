@@ -25,7 +25,9 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                 {isAdmin ? (
                 <>
                     <Link to="/admin/dashboard">Панель администратора</Link>
-                    <button onClick={onLogout}>Выйти</button>
+                    <Link to="/admin/dashboard">Расписание</Link>
+                    <Link to="/admin/dashboard">Заметки</Link>
+                    <button className="button logout" onClick={onLogout}>Выйти</button>
                 </>
                 ) : (
                 <>
@@ -40,7 +42,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                         <Link to="#contacts">Контакты</Link>
                         {!isAuthenticated && !isAdmin && (
                             <button
-                                className="login-toggle-button"
+                                className="button login-toggle"
                                 onClick={toggleLogin}
                                 aria-expanded={loginVisible}
                                 aria-controls="login-form"
