@@ -14,4 +14,5 @@ export interface AppointmentFormProps {
   date: Date;
   onSave: (data: AppointmentData) => void;
   onClose: () => void;
+  initialData?: AppointmentData;
 }

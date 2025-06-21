@@ -1,15 +1,36 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import AppointmentForm from "./appointmentForm";
 import type { Appointment, AppointmentData } from "../../../types/appointments";
 import "../../../styles/calendar.css";
 
+function useIsMobile(breakpoint = 600) {
+    const [isMobile, setIsMobile] = useState(() => window.innerWidth < breakpoint);
+    useEffect(() => {
+        const handler = () => setIsMobile(window.innerWidth < breakpoint);
+        window.addEventListener('resize', handler);
+        return () => window.removeEventListener('resize', handler);
+    }, [breakpoint]);
+
+    return isMobile;
+}
 
 const Calendar: React.FC = () => {
-    const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+    // состояния
     const [appointments, setAppointments] = useState<Appointment[]>([]);
     const [currentYear, setCurrentYear] = useState<number>(new Date().getFullYear());
     const [currentMonth, setCurrentMonth] = useState<number>(new Date().getMonth());
+    // управление модальным окном
+    const [activeDate, setActiveDate] = useState<string | null>(null);
+    // const [editIndex, setEditIndex] = useState<number | null>(null);
+    const [editAppointment, setEditAppointment] = useState<Appointment | null>(null);
+    // для мобильных устройств
+    const isMobile = useIsMobile(600);
 
+    // генерация календаря
+    // подсветка сегодняшеного числа
+    const today = new Date();
+    const todayStr = today.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+    // смена месяца
     const changeMonth = (offset: number) => {
         let newMonth = currentMonth + offset;
         let newYear = currentYear;
@@ -22,9 +43,8 @@ const Calendar: React.FC = () => {
         }
         setCurrentMonth(newMonth);
         setCurrentYear(newYear);
-        setSelectedDate(null);
+        setActiveDate(null);
     }
-
     // количество дней в месяце
     const dayInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
     // первый день месяца
@@ -38,7 +58,7 @@ const Calendar: React.FC = () => {
         const prevDate = new Date(currentYear, currentMonth, 1 - i);
         dates.push(prevDate);
     }
-    // довляем дни текущего месяца
+    // добавляем дни текущего месяца
     for (let i = 1; i <= dayInMonth; i++) {
         dates.push(new Date(currentYear, currentMonth, i));
     }
@@ -48,28 +68,36 @@ const Calendar: React.FC = () => {
     for (let i = 1; i <= nextDays; i++) {
         dates.push(new Date(currentYear, currentMonth + 1, i));
     }
-    const today = new Date();
-    const todayStr = today.toLocaleDateString('ru-RU').split('.').reverse().join('-');
 
-    const handleSave = (data: AppointmentData) => {
-        if(!selectedDate) return;
-
-        const dataStr = selectedDate
-        .toLocaleDateString('ru-RU')
-        .split('.')
-        .reverse()
-        .join('-');
-
+    // Обработчик клика по ячейке календаря
+    const handleCellClick = (dateStr: string) => {
+        setActiveDate(dateStr);
+        setEditAppointment(null);
+    }
+    // добавление новой записи
+    const handleAddAppointment = (data: AppointmentData) => {
+        if(!activeDate) return;
         const newAppointment: Appointment = {
             ...data,
-            date: dataStr,
-        };
-
+            date: activeDate,
+        }
         setAppointments(prev => [...prev, newAppointment]);
-        setSelectedDate(null);
     }
 
-    const handleClose = () => setSelectedDate(null);
+    // редактирование записи 
+    const handleEditAppointment = (data: AppointmentData) => {
+        if(!editAppointment) return;
+        const updateAppointment = appointments.map(app => 
+            app === editAppointment ? { ...data, date: app.date } : app
+        );
+        setAppointments(updateAppointment);
+        setEditAppointment(null);
+    }
+
+    // удаление записи
+    const handleDeleteAppointment = (appointment: Appointment) => {
+        setAppointments(prev => prev.filter(app => app !== appointment))
+    }
 
     return (
         <div className="calendar-container">
@@ -89,47 +117,133 @@ const Calendar: React.FC = () => {
                     </svg>
                 </button>
             </div>
-            <div className="calendar-grid">
-                {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((day, index) => (
-                    <div key={index} className="calendar-week-day">{day}</div>
-                ))}
-                {dates.map(date => {
-                    const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
-                    const isCurrentMonth = date.getMonth() === currentMonth;
-                    const dayAppointments = appointments
-                    .filter(a => a.date === dateStr)
-                    .sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
-                    return (
-                        <div
-                            key={dateStr}
-                            className={`calendar-day 
-                                ${dateStr === todayStr ? 'today' : ''}
-                                ${!isCurrentMonth ? 'other-month' : ''}`}
-                            onClick={() => setSelectedDate(date)}
-                        >
-                            <div className="date-number">
-                                {date.getDate()}
-                                {dateStr === todayStr && <span> (Сегодня)</span>}
+            {/* адаптивнывй рендер */}
+            {isMobile ? (
+                <div className="calendar-list">
+                {dates
+                    .filter(date => date.getMonth() === currentMonth)
+                    .map(date => {
+                        const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+                        const dayAppointments = appointments.filter(a => a.date === dateStr);
+                        return (
+                            <div
+                                key={dateStr}
+                                className={`calendar-list-day ${dateStr === todayStr ? 'today' : ''}`}
+                                onClick={() => handleCellClick(dateStr)}
+                            >
+                                <div className="list-date">
+                                    <span className="list-date-number">{date.getDate()}</span>
+                                    <span className="list-date-weekday">
+                                    {date.toLocaleDateString('ru-RU', { weekday: 'short' })}
+                                    </span>
+                                    {dayAppointments.length > 0 && (
+                                    <span className="list-appointments-count">
+                                    {dayAppointments.length} {dayAppointments.length === 1 ? 'запись' : 'записи'}
+                                    </span>
+                                    )}
+                                </div>
                             </div>
-                            <ul className="appointments-list">
-                                {dayAppointments.map((a, idx) => (
-                                    <li key={idx}>
-                                        {a.clientName} ({a.service}) в
-                                         {new Date(a.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit'})}
-                                    </li>
-                                ))}
-                            </ul>
+                        );
+                    })}
+                </div> 
+            ) : (
+                <div className="calendar-grid">
+                    {['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'].map((day, index) => (
+                        <div key={index} className="calendar-week-day">{day}</div>
+                    ))}
+                    {dates.map(date => {
+                        const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+                        const isCurrentMonth = date.getMonth() === currentMonth;
+                        const dayAppointments = appointments.filter(a => a.date === dateStr)
+                    
+                        return (
+                            <div
+                                key={dateStr}
+                                className={`calendar-day 
+                                    ${dateStr === todayStr ? 'today' : ''}
+                                    ${!isCurrentMonth ? 'other-month' : ''}`}
+                                onClick={() => handleCellClick(dateStr)}
+                            >
+                                <div className="date-number">
+                                    {date.getDate()}
+                                    {dateStr === todayStr && <span> (Сегодня)</span>}
+                                </div>
+                                {dayAppointments.length > 0 && (
+                                    <div className="appoinments-count">
+                                        {dayAppointments.length} {dayAppointments.length === 1 ? 
+                                        'запись' :
+                                        dayAppointments.length > 1 && dayAppointments.length < 5 ? 
+                                    'записи' : 'записей'}
+                                    </div>
+                                )}
+                            </div>
+                        );
+                    })}
+                </div> 
+            )}
+                  {/* модальное окно */}
+            {activeDate && (
+                <div className="modal" onClick={() => setActiveDate(null)}>
+                    <div className="modal-content" onClick={e => e.stopPropagation()}>
+                        {editAppointment ? (
+                            <AppointmentForm
+                                date={new Date(editAppointment.date)}
+                                onSave={handleEditAppointment}
+                                onClose={() => setEditAppointment(null)}
+                                initialData={editAppointment}
+                            />
+                        ) : (
+                            <AppointmentForm
+                                date={new Date(activeDate)}
+                                onSave={handleAddAppointment}
+                                onClose={() => setActiveDate(null)}
+                            />
+                        )}
+                        {/* список существующих записей */}
+                        <div className="existing-appointments">
+                            <h3>Существующие записи</h3>
+                            {appointments.filter(a => a.date === activeDate).length === 0 ? (
+                                <p>Нет записей</p>
+                            ) : (
+                                <ul>
+                                    {appointments
+                                    .filter(a => a.date === activeDate)
+                                    .sort((a,b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+                                    .map((appointment, index) => (
+                                        <li key={index} className="appointment-item">
+                                            <div className="appointment-indo">
+                                                <div><strong>{appointment.clientName}</strong></div>
+                                                <div>Услуга: {appointment.service}</div>
+                                                <div>Время: {new Date(appointment.time)
+                                                .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                                                <div>Цена: {appointment.price} ₽</div>
+                                                {appointment.comment && <div>Заметки: {appointment.comment}</div>}
+                                            </div>
+                                            <div className="appointment-actions">
+                                                <button
+                                                    className="btn-edit"
+                                                    onClick={() => setEditAppointment(appointment)}
+                                                >
+                                                Изменить запись
+                                                </button>
+                                                <button
+                                                    className="btn-delete"
+                                                    onClick={() => handleDeleteAppointment(appointment)}
+                                                >
+                                                Удалить запись
+                                                </button>
+                                            </div>
+                                        </li>
+                                    ))}
+                                </ul>
+                            )}
                         </div>
-                    );
-                })}
-            </div>
-        {selectedDate && (
-            <div className="modal">
-                <AppointmentForm date={selectedDate} onSave={handleSave} onClose={handleClose}/>
-            </div>
-        )}        
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 export default Calendar;
+

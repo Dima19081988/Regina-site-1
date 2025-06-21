@@ -1,0 +1,93 @@
+.pricelist {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 15px 15px;
+    font-family: 'Montserrat', Arial, sans-serif;
+    color: #333;
+    background-color: #fff;
+    text-align: center;
+}
+
+.pricelist h2 {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 700;
+    margin-bottom: 40px;
+    color: rgb(132, 105, 103);
+}
+
+.pricelist-category {
+    margin-bottom: 40px;
+}
+
+.pricelist-category h3 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    border-bottom: 3px solid rgb(132, 105, 103);
+    padding-bottom: 5px;
+    color: rgb(132, 105, 103);
+    text-align: left;
+}
+
+.pricelist-table {
+    margin: 0 auto;  
+    border-collapse: collapse;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    table-layout: fixed;
+}
+.pricelist-table thead {
+    background-color: #e6f7ff;
+}
+
+.pricelist-table th,
+.pricelist-table td {
+    padding: 12px 15px;
+    border: 1px solid #846969;
+    text-align: left;
+    font-size: 1rem;
+}
+.pricelist-table thead {
+    background-color: #e6f7ff;
+}
+
+.pricelist-table th {
+    font-weight: 700;
+    color: rgb(132, 105, 103);
+    text-align: left;
+    }
+
+.pricelist-table tbody tr:hover {
+    background-color: #f0faff;
+}
+.pricelist-table th:nth-child(2),
+.pricelist-table th:nth-child(3),
+.pricelist-table td:nth-child(2),
+.pricelist-table td:nth-child(3) {
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .pricelist {
+        margin: 20px 10px;
+        padding: 0 10px;
+  }
+
+    .pricelist h2 {
+        font-size: 1.5rem;
+        margin-bottom: 25px;
+  }
+
+    .pricelist-category h3 {
+        font-size: 1.2rem;
+        margin-bottom: 12px;
+  }
+
+    .pricelist-table th,
+    .pricelist-table td {
+        padding: 10px 8px;
+        font-size: 0.9rem;
+  }
+}

@@ -3,18 +3,29 @@ import type { AppointmentData, AppointmentFormProps } from "../../../types/appoi
 import "../../../styles/appointmentForm.css";
 
 
-const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose }) => {
+const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose, initialData }) => {
     const [form, setForm] = useState<AppointmentData>({
-        clientName: '',
-        service: '',
-        time: '',
-        price: '',
-        comment: ''
-    })
+        clientName: initialData?.clientName || '',
+        service: initialData?.service || '',
+        time: initialData?.time
+            ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
+            : '',
+        price: initialData?.price || '',
+        comment: initialData?.comment || ''
+    });
 
+     // При смене даты или initialData сбрасываем или обновляем форму
     useEffect(() => {
-        setForm({ clientName: '', service: '', time: '', price: '', comment: '' });
-        }, [date]);
+        setForm({
+            clientName: initialData?.clientName || '',
+            service: initialData?.service || '',
+            time: initialData?.time
+                ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
+                : '',
+            price: initialData?.price || '',
+            comment: initialData?.comment || ''
+        });
+    }, [date, initialData]);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement |
@@ -24,7 +35,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if(!form.clientName || !form.service || !form.time || !form.price) {
+        if(!form.clientName) {
             alert('Нужно заполнить все поля');
             return;
         }
@@ -41,7 +52,10 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
             comment: form.comment,
         })
 
-        setForm({ clientName: '', service: '', time: '', price: '', comment: '' });
+        if (!initialData) {
+            setForm({ clientName: '', service: '', time: '', price: '', comment: '' });
+        }
+
         onClose();
     }
 
@@ -67,9 +81,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
                 value={form.service}
                 onChange={handleChange}
             >
-                <option value="" disabled>
-                    Выберите услугу
-                </option>
+                <option value="" disabled>Выберите услугу</option>
                 <option value="Аппаратные методы">Аппаратные методы</option>
                 <option value="Филлеры">Филлеры</option>
                 <option value="Ботулотоксин">Ботулотоксин</option>

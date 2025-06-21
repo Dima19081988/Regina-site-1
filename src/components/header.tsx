@@ -15,7 +15,7 @@ interface HeaderProps {
 export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
     isAuthenticated }) => {
     const [loginVisible, setLoginVisible] = useState(false);
-    const toggleLogin = () => setLoginVisible(prev => !prev)
+    const toggleLogin = () => setLoginVisible(prev => !prev);
     return (
         <header className={`header ${isAdmin ? 'admin-mode' : 'user-mode'}`}>
             {/* <div className="header__logo">
@@ -47,7 +47,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                                 aria-expanded={loginVisible}
                                 aria-controls="login-form"
                             >
-                                Войти        
+                                Вход для врача       
                             </button>
                         )}  
                     </div>  

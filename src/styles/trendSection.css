@@ -52,3 +52,34 @@
     color: rgb(95, 75, 74);
     text-align: center;
 }
+
+@media (max-width: 600px) {
+    .trends-section__list {
+        display: flex;
+        flex-direction: column; /* вертикальный список */
+        gap: 12px;
+        overflow-x: visible; /* отключаем горизонтальный скролл */
+        padding-bottom: 0;
+    }
+
+    .trend-card {
+        flex: none;          /* отменяем flex-grow/shrink */
+        width: 100%;         /* карточка занимает всю ширину контейнера */
+        padding-bottom: 0;   /* убираем пропорциональную высоту */
+        height: auto;        /* высота по содержимому */
+        min-height: 120px;   /* можно задать минимальную высоту */
+        display: flex;
+        align-items: center; /* выравнивание содержимого по центру вертикали */
+        padding: 15px;
+    }
+
+    .trend-card__title {
+        font-size: 1.1em;
+        padding: 0;
+        background: none;
+        color: rgb(95, 75, 74);
+        text-align: left;
+        width: auto;
+    }
+}
+

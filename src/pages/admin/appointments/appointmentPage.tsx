@@ -1,5 +1,6 @@
 import React from "react";
 import Calendar from "./calendar";
+import "../../../styles/appointmentsPage.css"
 
 const AppointmentsPage: React.FC = () => {
     return (

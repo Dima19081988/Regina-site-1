@@ -22,16 +22,15 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
     return (
         <section className="login-form">
-            <h2>Вход для врача</h2>
-            <form onSubmit={handleSubmit}>
+            <form onSubmit={handleSubmit} className="login-form-fields">
                 <input
                     type="password"
-                    placeholder="введите пароль"
+                    placeholder="пароль"
                     value={password}
                     onChange={e => setPassword(e.target.value)}
                     required
                 />
-                <button type="submit">Войти</button>
+                <button type="submit" className="button btn-log-admin">Войти</button>
             </form>
         </section>
     );

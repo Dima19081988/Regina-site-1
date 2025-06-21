@@ -149,6 +149,103 @@
     transition: background-color 0.3s ease;
 }
 
-.admin-mode .logout-button:hover {
+.admin-mode .logout:hover {
     background-color: #047a9a;
+}
+
+/* медиа-запросы */
+@media (max-width: 600px) {
+    .user-mode .header {
+        height: auto;
+        padding: 10px 15px;
+        flex-direction: column;
+        align-items: flex-start;
+        overflow-x: hidden;
+    }
+
+    .user-mode .header__nav {
+        position: static !important; 
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+        overflow-x: hidden;
+    }
+
+    .user-mode .header__nav .nav-left,
+    .user-mode .header__nav .nav-right {
+        flex-direction: column;
+        gap: 10px;
+        width: 100%;
+        align-items: flex-start;
+    }
+
+    .user-mode .header__nav a {
+        font-size: 14px;
+        color: rgb(132, 105, 103);
+        padding: 8px 0;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .user-mode .login-toggle {
+        font-size: 14px;
+        padding: 8px 12px;
+    }
+
+    .user-mode .header__login-form {
+        position: fixed; /* фиксированная позиция относительно окна */
+        top: 250px; /* чуть ниже шапки, можно подкорректировать */
+        right: 10px;
+        width: 250px; 
+        max-width: 90vw;
+        max-height: 80vh;
+        background: rgba(242, 221, 237, 0.95);
+        border: 2px solid rgba(203, 38, 165, 0.72);
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        z-index: 1100;
+        box-sizing: border-box;
+    }
+    .user-mode .header__title {
+        font-size: 28px;
+        margin: 15px 0 10px 0;
+        width: 100%;
+        text-align: center;
+    }
+/* режим admin */
+    .admin-mode .header {
+        flex-wrap: nowrap; 
+        justify-content: space-between; 
+        height: auto;
+        padding: 10px 20px;
+    }
+
+    .admin-mode .header__nav {
+        position: static !important; 
+        display: flex;
+        flex-direction: column; 
+        flex-grow: 1; 
+        gap: 10px;
+        align-items: flex-start;
+        margin-right: 15px; 
+        width: 100%;
+        padding: 0 10px;
+        box-sizing: border-box;
+    }
+
+    .admin-mode .header__nav a {
+        padding: 8px 12px;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 6px;
+    }
+
+    .admin-mode .logout {
+        flex-shrink: 0;
+        white-space: nowrap;
+        padding: 8px 16px;
+    }
 }

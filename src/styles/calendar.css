@@ -29,21 +29,23 @@
     display: inline-flex;
     align-items: center;
     gap: 6px; 
-    background-color: #1890ff;
+    background-color: rgb(6, 144, 182);
     border: none;
+    border-radius: 18px;
     color: white;
+    font-family: 'Montserrat', Arial, sans-serif;
     font-weight: 600;
     font-size: 1rem;
     padding: 8px 16px;
-    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease; 
+    transition: background-color 0.3s, transform 0.2s;
     user-select: none;
 }
 
+
 .btn-arrow svg {
     stroke: white; 
-    transition: transform 0.3s ease; 
+    transition: transform 0.3s;
 }
 
 .btn-arrow:hover {
@@ -52,15 +54,13 @@
 
 .btn-arrow:active {
     background-color: #096dd9;
-    transform: scale(0.95); 
+    transform: scale(0.95);
 }
 
-/* Анимация стрелок при наведении */
 .btn-arrow:hover svg {
-    transform: translateX(3px); 
+    transform: translateX(3px);
 }
 
-/* Для кнопки "Назад" стрелка должна сдвигаться влево */
 .btn-arrow:first-child:hover svg {
     transform: translateX(-3px);
 }
@@ -86,9 +86,10 @@
     min-height: 100px;
     cursor: pointer;
     border-radius: 6px;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s;
     display: flex;
     flex-direction: column;
+    position: relative;
 }
 
 .calendar-day:hover {
@@ -101,38 +102,181 @@
     font-weight: bold;
 }
 
+.calendar-day.other-month {
+    opacity: 0.5;
+    background: #f4f4f4;
+    color: #aaa;
+}
+
 .date-number {
     font-size: 1.2em;
     margin-bottom: 8px;
     color: #333;
 }
 
-.appointments-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    flex-grow: 1;
-    overflow-y: auto;
+.appoinments-count {
+    background-color: #1890ff;
+    color: #fff;
+    border-radius: 12px;
+    padding: 2px 10px;
     font-size: 0.9em;
-    color: #555;
-}
-
-.appointments-list li {
-    margin-bottom: 4px;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-    overflow: hidden;
+    font-weight: 600;
+    display: inline-block;
+    margin-top: 4px;
+    align-self: flex-start;
 }
 
 .modal {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
+    top: 0; left: 0; width: 100%; height: 100%;
     background-color: rgba(0,0,0,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
     z-index: 1000;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 15px 15px;
+    border-radius: 10px;
+    width: 95%;
+    max-width: 500px;
+    max-height: 90vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    position: relative;
+}
+
+.existing-appointments {
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid #eee;
+}
+
+.existing-appointments h3 {
+    margin-top: 0;
+    color: #333;
+    font-size: 1.1em;
+    margin-bottom: 10px;
+}
+
+.appointment-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    gap: 10px;
+}
+
+.appointment-info {
+    flex: 1;
+    color: #333;
+    font-size: 1em;
+}
+
+.appointment-info div {
+    margin-bottom: 3px;
+}
+
+.appointment-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 120px;
+}
+
+.btn-edit,
+.btn-delete {
+    padding: 7px 12px;
+    border-radius: 4px;
+    border: none;
+    font-size: 0.95em;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.btn-edit {
+    background: #ffe58f;
+    color: #8c6d1f;
+    margin-bottom: 4px;
+}
+
+.btn-edit:hover {
+    background: #ffd666;
+}
+
+.btn-delete {
+    background: #ff7875;
+    color: #fff;
+}
+
+.btn-delete:hover {
+    background: #d32f2f;
+}
+
+/* --- Мобильная адаптация календаря --- */
+@media (max-width: 600px) {
+
+    .calendar-header h2 {
+        font-size: 1.0rem;
+        font-weight: 700;
+    }
+
+    .calendar-grid { display: none; }
+    .calendar-list {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+  }
+    .calendar-list-day {
+        background: #f9f9f9;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        padding: 12px 10px;
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+        transition: background 0.2s;
+  }
+    .calendar-list-day.today {
+        border: 2px solid #1890ff;
+        background: #bae7ff;
+        font-weight: bold;
+  }
+    .list-date {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1.08em;
+        width: 100%;
+  }
+    .list-date-number {
+        font-size: 1.3em;
+        font-weight: 600;
+        min-width: 32px;
+        text-align: center;
+        color: #333;
+  }
+    .list-date-weekday {
+        font-size: 1em;
+        color: #888;
+        min-width: 48px;
+        text-align: left;
+  }
+    .list-appointments-count {
+        margin-left: auto;
+        background: #1890ff;
+        color: #fff;
+        font-size: 0.95em;
+        border-radius: 12px;
+        padding: 2px 10px;
+        font-weight: 600;
+  }
+    .modal-content {
+        max-width: 95vw;
+        max-height: 85vh;
+        padding: 15px 15px 15px 15px;
+  }
 }

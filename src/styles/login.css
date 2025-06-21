@@ -35,10 +35,17 @@
     border: 1px solid #ccc;
     border-radius: 6px;
     box-sizing: border-box;
-    margin-top: 10px;
 }
+
 .login-form input[type="password"]:focus{
     outline: none;
     border-color: rgba(203, 38, 165, 0.718);
     box-shadow: 0 0 5px rgba(203, 38, 154, 0.5);
+}
+
+@media (max-width: 600px) {
+    .login-form-fields {
+        display: flex;
+        flex-direction: column;
+    }
 }
