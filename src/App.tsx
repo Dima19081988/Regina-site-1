@@ -8,6 +8,7 @@ import { PriceList } from "./pages/priceList";
 import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";
 import AppointmentsPage from "./pages/admin/appointments/appointmentPage";
+import NotesPage from "./pages/admin/notes";
 
 const AdminDashboard = React.lazy(() => import('./pages/admin/adminDashboard'));
 
@@ -46,6 +47,16 @@ function App() {
                 <ProtectedRoute>
                   <Suspense fallback={<div>Загрузка...</div>}>
                     <AdminDashboard />
+                  </Suspense>
+                </ProtectedRoute>
+              } 
+            />
+            <Route 
+              path="/admin/notes" 
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<div>Загрузка...</div>}>
+                    <NotesPage />
                   </Suspense>
                 </ProtectedRoute>
               } 

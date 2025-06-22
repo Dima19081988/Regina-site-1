@@ -1,0 +1,129 @@
+/* Контейнер формы */
+.form {
+    max-width: 600px;
+    margin: 20px auto;
+    padding: 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: #fafafa;
+}
+
+/* Поля ввода заголовка */
+.note-form-input {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Текстовое поле для содержания */
+.note-form-textarea {
+    width: 100%;
+    padding: 10px 12px;
+    font-size: 1rem;
+    resize: vertical;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 12px;
+    min-height: 120px;
+}
+
+/* Ошибки формы */
+.note-form-error {
+    color: #d93025;
+    margin-bottom: 12px;
+    font-weight: 600;
+}
+
+/* Кнопки формы */
+.note-form-btn {
+    padding: 10px 20px;
+    font-size: 1rem;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.note-form-btn:disabled {
+    background-color: #90caf9;
+    cursor: not-allowed;
+}
+
+.note-form-btn:hover:not(:disabled) {
+    background-color: #1565c0;
+}
+
+/* Список заметок */
+.note-list {
+    max-width: 600px;
+    margin: 0 auto 40px auto;
+    padding: 0;
+    list-style: none;
+}
+
+/* Элемент заметки */
+.note-item {
+    border-bottom: 1px solid #ddd;
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Заголовок заметки */
+.note-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 700;
+}
+
+/* Содержание заметки */
+.note-content {
+    margin: 0;
+    font-size: 1rem;
+    white-space: pre-wrap; /* сохраняет переносы строк */
+}
+
+/* Дата создания */
+.note-item small {
+    color: #666;
+    font-size: 0.8rem;
+}
+
+/* Кнопки редактирования и удаления */
+.note-item button {
+    align-self: flex-start;
+    margin-right: 8px;
+    padding: 6px 12px;
+    font-size: 0.9rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    background-color: #1976d2;
+    color: white;
+    transition: background-color 0.3s ease;
+}
+
+.note-item button:hover {
+    background-color: #1565c0;
+}
+
+.note-item button:last-child {
+    background-color: #d32f2f;
+}
+
+.note-item button:last-child:hover {
+    background-color: #b71c1c;
+}
+
+/* Для кнопок рядом */
+.note-item button + button {
+    margin-left: 8px;
+}
