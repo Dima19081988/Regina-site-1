@@ -1,7 +1,15 @@
 const express = require('express');
-const pool = require('./config/db');
+const cors = require('cors');
+const notesRouter = require('./routes/notes');
+
 const app = express();
 
+app.use(cors());
+app.use(express.json())
+
+app.use('/notes', notesRouter);
+
+// тестовый
 app.get('/test-db', async (req, res) => {
   try {
     const result = await pool.query('SELECT NOW()');
