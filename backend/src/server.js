@@ -4,7 +4,12 @@ const notesRouter = require('./routes/notes');
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin: 'http://localhost:5173',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type']
+}));
+
 app.use(express.json())
 
 app.use('/notes', notesRouter);
@@ -22,4 +27,6 @@ app.get('/test-db', async (req, res) => {
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
+}).on('error', (err) => {
+    console.error('Server error:', err.message);
 });

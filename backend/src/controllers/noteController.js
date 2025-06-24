@@ -22,9 +22,11 @@ const noteController = {
 
     async create(req, res) {
         try {
+            console.log("Полученные данные:", req.body);
             const newNote = await noteService.createNote(req.body);
             res.status(201).json(newNote);
         } catch (error) {
+            console.error("Ошибка создания:", error.message);
             res.status(400).json({ error: error.message });
         }
     },

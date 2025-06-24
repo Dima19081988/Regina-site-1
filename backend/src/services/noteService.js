@@ -7,15 +7,16 @@ const noteService = {
 
     async getNoteById(id) {
         if(!id) throw new Error('ID заметки не указан');
-        return await new Note.getById(id);
+        return await Note.getById(id);
     },
 
     async createNote(data) {
-        const { title = '', content } = data;
-        if (!content || !content.trim()) {
+        const { title = '', content = '' } = data;
+        if (typeof content !== 'string' || !content.trim()) {
             throw new Error('Содержание заметки обязательно');
         }
-        return await new Note.create({ title: title.trim(), content: content.trim() });
+
+        return await Note.create({ title: title.trim(), content: content.trim() });
     },
 
     async updateNote(id, data) {
@@ -23,7 +24,7 @@ const noteService = {
         const { title = '', content } = data;
         if(!title.trim()) throw new Error('Заголовок обязателен');
         if(!content.trim()) throw new Error('Содержание заметки обязательно');
-        return await new Note.update(id, { title: title.trim(), content: content.trim() });
+        return await Note.update(id, { title: title.trim(), content: content.trim() });
     },
 
     async deleteNote(id) {

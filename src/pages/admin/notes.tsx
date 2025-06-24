@@ -23,6 +23,7 @@ const notesPage: React.FC = () => {
     const [editId, setEditId] = useState<number | null>(null);
     const [editTitle, setEditTitle] = useState<string>('');
     const [editContent, setEditContent] = useState<string>('');
+    const [deletingId, setDeletingId] = useState<number | null>(null);
     // Загрузка заметок с backend 
     useEffect(() => {
         fetch('http://localhost:3000/notes')
@@ -42,9 +43,10 @@ const notesPage: React.FC = () => {
     // Обработка отправки новой заметки
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
+        console.log("Отправляемые данные:", { title, content });
         setSubmitError(null);
 
-        if(!content.trim()) {
+        if(!title.trim() || !content.trim()) {
             setSubmitError('Необходимо добавить текст');
             return;
         }
@@ -85,7 +87,7 @@ const notesPage: React.FC = () => {
     // сохранить изменения
     const saveEdit = async (e:FormEvent) => {
         e.preventDefault();
-        if(!editTitle.trim()) {
+        if(!editTitle.trim() || !editContent.trim()) {
             setSubmitError(error);
             return;
         }
@@ -110,14 +112,17 @@ const notesPage: React.FC = () => {
     // удаление заметки
     const deleteNote = async (id: number) => {
         if(!window.confirm('Удалить заметку?')) return;
+        setDeletingId(null);
         try {
-            const res = await fetch(`http://localhost:3000/notes/${editId}`,
+            const res = await fetch(`http://localhost:3000/notes/${id}`,
             { method: 'DELETE' });
             if(!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
             setNotes(notes.filter(n => n.id !== id));
         } catch (err: any) {
             alert('Ошибка при удалении: ' + err.message);
-        }
+        }   finally {
+        setDeletingId(null);
+    }
     };
 
     if(loading) return <p>Загрузка заметок</p>;
@@ -181,7 +186,12 @@ const notesPage: React.FC = () => {
                         {note.created_at && <small>{new
                             Date(note.created_at).toLocaleString()}</small>}
                         <button onClick={() => startEdit(note)}>Редактировать</button>
-                        <button onClick={() => deleteNote(note.id)}>Удалить</button>
+                        <button
+                                onClick={() => deleteNote(note.id)}
+                                disabled={deletingId === note.id || submitting} 
+                        >
+                        {deletingId === note.id ? 'Удаляем...' : 'Удалить'}
+                        </button>
                     </li>
                 ))}
             </ul>
