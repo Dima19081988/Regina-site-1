@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import type { ChangeEvent, FormEvent} from "react";
 import "../../styles/notes.css"
 
-
 interface Note {
     id: number;
     title: string;
