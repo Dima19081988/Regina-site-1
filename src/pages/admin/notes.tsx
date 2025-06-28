@@ -1,46 +1,31 @@
 import React, { useState, useEffect } from "react";
-import type { ChangeEvent, FormEvent} from "react";
+import type { ChangeEvent } from "react";
+import { fetchNotes, createNote, updateNote, deleteNote } from "../../api/notes.ts";
+import type { Note } from "../../api/notes.ts";
 import "../../styles/notes.css"
-
-interface Note {
-    id: number;
-    title: string;
-    content: string;
-    created_at?: string;
-}
 
 const notesPage: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
-    
     const [title, setTitle] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [submitError, setSubmitError] = useState<string | null>(null);
     const [submitting, setSubmitting] = useState<boolean>(false);
-
     const [editId, setEditId] = useState<number | null>(null);
     const [editTitle, setEditTitle] = useState<string>('');
     const [editContent, setEditContent] = useState<string>('');
     const [deletingId, setDeletingId] = useState<number | null>(null);
+
     // Загрузка заметок с backend 
     useEffect(() => {
-        fetch('http://localhost:3000/notes')
-            .then(res => {
-                if (!res.ok) throw new Error(`Ошибка загрузки: ${res.status}`);
-                return res.json();
-            })
-            .then((data: Note[]) => {
-                setNotes(data);
-                setLoading(false);
-            })
-            .catch(err => {
-                setError(err.message);
-                setLoading(false);
-            });
+        fetchNotes()
+            .then(setNotes)
+            .catch(err => setError(err.message))
+            .finally(() => setLoading(false))
     }, []);
     // Обработка отправки новой заметки
-    const handleSubmit = (e: FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("Отправляемые данные:", { title, content });
         setSubmitError(null);
@@ -52,23 +37,18 @@ const notesPage: React.FC = () => {
 
         setSubmitting(true);
 
-        fetch('http://localhost:3000/notes', {
-            method: 'POST',
-            headers: { 'Content-type': 'application/json' },
-            body: JSON.stringify({ title, content })
-        })
-        .then(res => {
-            if(!res.ok) throw new Error(`Ошибка при создании: ${res.status}`);
-            return res.json();
-        })
-        .then((newNote: Note) => {
-            setNotes(prevNotes => [newNote, ...prevNotes]);
+        try {
+            const newNote = await createNote(title, content);
+            setNotes(prev => [newNote, ...prev]);
             setTitle('');
             setContent('');
-        })
-        .catch(err => setSubmitError(err.message))
-        .finally(() => setSubmitting(false));
+        } catch (err: any) {
+            setSubmitError(err.message);
+        } finally {
+            setSubmitting(false);
+        }
     };
+
     //начало редактирования заметки
     const startEdit = (note: Note) => {
         setEditId(note.id);
@@ -83,46 +63,42 @@ const notesPage: React.FC = () => {
         setEditContent('');
         setSubmitError(null);
     };
+
     // сохранить изменения
-    const saveEdit = async (e:FormEvent) => {
+    const saveEdit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if(!editTitle.trim() || !editContent.trim()) {
-            setSubmitError(error);
+            setSubmitError('Необходимо добавить текст');
             return;
         }
         setSubmitting(true);
         try {
-            const res = await fetch(`http://localhost:3000/notes/${editId}`, {
-                method: 'PUT',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ title: editTitle, content: editContent }),
-            })
-            if (!res.ok) throw new Error(`Ошибка обновления: ${res.status}`);
-            const updateNote = await res.json();
-            setNotes(notes.map(n => (n.id === editId ? updateNote : n)));
-            cancelEdit();
-        } catch (err: any) {
-            setSubmitError(err.message);
+            if (editId !== null) {
+                const updated = await updateNote(editId, editTitle, editContent);
+                setNotes(notes.map(n => n.id === editId ? updated : n));
+                cancelEdit();
+            }
+        } catch(err: any) {
+            setSubmitError(err.message);    
         } finally {
-            setSubmitting(false);
+            setSubmitting(false);    
         }
     };
 
     // удаление заметки
-    const deleteNote = async (id: number) => {
+    const handleDeleteNote = async (id: number) => {
         if(!window.confirm('Удалить заметку?')) return;
-        setDeletingId(null);
+        setDeletingId(id);
         try {
-            const res = await fetch(`http://localhost:3000/notes/${id}`,
-            { method: 'DELETE' });
-            if(!res.ok) throw new Error(`Ошибка удаления: ${res.status}`);
+            await deleteNote(id);
             setNotes(notes.filter(n => n.id !== id));
         } catch (err: any) {
             alert('Ошибка при удалении: ' + err.message);
-        }   finally {
-        setDeletingId(null);
-    }
+        } finally {
+            setDeletingId(null)
+        }
     };
+
 
     if(loading) return <p>Загрузка заметок</p>;
     if(error) return <p>Ошибка: {error}</p>
@@ -186,7 +162,7 @@ const notesPage: React.FC = () => {
                             Date(note.created_at).toLocaleString()}</small>}
                         <button onClick={() => startEdit(note)}>Редактировать</button>
                         <button
-                                onClick={() => deleteNote(note.id)}
+                                onClick={() => handleDeleteNote(note.id)}
                                 disabled={deletingId === note.id || submitting} 
                         >
                         {deletingId === note.id ? 'Удаляем...' : 'Удалить'}
