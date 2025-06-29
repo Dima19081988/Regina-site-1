@@ -4,10 +4,11 @@ export interface AppointmentData {
   time: string;
   price: string;
   comment: string;
+  date: string;
 }
 
 export interface Appointment extends AppointmentData {
-    date: string;
+    id: number;
 }
 
 export interface AppointmentFormProps {

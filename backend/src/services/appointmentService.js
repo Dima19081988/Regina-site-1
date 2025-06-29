@@ -25,7 +25,7 @@ const appointmentService = {
         if (!time) throw new Error('Время обязательно');
 
         const existing = await Appointment.findByDateAndTime(date, time);
-        if (existing && existing.id !== Number(id)) {
+        if (existing && existing.id !== parseInt(id)) {
             throw new Error('На это время уже есть запись!');
         }
 

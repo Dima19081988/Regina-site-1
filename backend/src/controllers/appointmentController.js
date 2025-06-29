@@ -17,15 +17,7 @@ const appointmentController = {
             const result = await appointmentService.create(req.body);
             res.status(201).json(result);
         } catch (e) {
-           if(e.message && (
-                e.message.includes('обязательно') ||
-                e.message.includes('уже есть запись')
-            )) {
-                res.status(400).json({ error: e.message })
-            } else {
-                console.error("Ошибка создания записи:", e);
-                res.status(500).json({ error: "Ошибка сервера при создании записи" });
-            }
+            res.status(400).json({ error: e.message }); 
         }
     },
 

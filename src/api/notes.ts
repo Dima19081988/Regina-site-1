@@ -1,9 +1,4 @@
-export interface Note {
-    id: number;
-    title: string;
-    content: string;
-    created_at?: string;
-}
+import type { Note } from "../types/notes";
 
 const API_URL = "http://localhost:3000/notes";
 

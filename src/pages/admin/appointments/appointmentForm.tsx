@@ -11,7 +11,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
             ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
             : '',
         price: initialData?.price || '',
-        comment: initialData?.comment || ''
+        comment: initialData?.comment || '',
+        date: date.toISOString().split('T')[0],
     });
 
      // При смене даты или initialData сбрасываем или обновляем форму
@@ -23,7 +24,8 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
                 ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
                 : '',
             price: initialData?.price || '',
-            comment: initialData?.comment || ''
+            comment: initialData?.comment || '',
+            date: date.toISOString().split('T')[0],
         });
     }, [date, initialData]);
 
@@ -50,10 +52,11 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
             time: dateTime.toISOString(),
             price: form.price,
             comment: form.comment,
+            date: form.date,
         })
 
         if (!initialData) {
-            setForm({ clientName: '', service: '', time: '', price: '', comment: '' });
+            setForm({ clientName: '', service: '', time: '', price: '', comment: '', date: form.date });
         }
 
         onClose();

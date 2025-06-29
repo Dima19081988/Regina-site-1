@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import type { ChangeEvent } from "react";
 import { fetchNotes, createNote, updateNote, deleteNote } from "../../api/notes.ts";
-import type { Note } from "../../api/notes.ts";
-import "../../styles/notes.css"
+import type { Note } from "../../types/notes.ts";
+import "../../styles/notes.css";
 
 const notesPage: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);

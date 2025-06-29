@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from "react";
 import AppointmentForm from "./appointmentForm";
 import type { Appointment, AppointmentData } from "../../../types/appointments";
+import { 
+    fetchAppointmentsByMonth, 
+    createAppointment, 
+    updateAppointment, 
+    deleteAppointment } from "../../../api/appointments";
 import "../../../styles/calendar.css";
 
 function useIsMobile(breakpoint = 600) {
@@ -14,6 +19,7 @@ function useIsMobile(breakpoint = 600) {
     return isMobile;
 }
 
+
 const Calendar: React.FC = () => {
     // состояния
     const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -25,6 +31,12 @@ const Calendar: React.FC = () => {
     const [editAppointment, setEditAppointment] = useState<Appointment | null>(null);
     // для мобильных устройств
     const isMobile = useIsMobile(600);
+
+    useEffect(() => {
+    fetchAppointmentsByMonth(currentYear, currentMonth)
+        .then(setAppointments)
+        .catch(e => alert('Ошибка загрузки календаря' + e.message));
+    }, [currentYear, currentMonth])
 
     // генерация календаря
     // подсветка сегодняшеного числа
@@ -75,28 +87,39 @@ const Calendar: React.FC = () => {
         setEditAppointment(null);
     }
     // добавление новой записи
-    const handleAddAppointment = (data: AppointmentData) => {
-        if(!activeDate) return;
-        const newAppointment: Appointment = {
-            ...data,
-            date: activeDate,
+
+    const handleAddAppointment = async (data: AppointmentData) => {
+        if (!activeDate) return;
+        try {
+            await createAppointment({ ...data, date: activeDate });
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+            setActiveDate(null);
+        } catch (e: any) {
+            alert("Ошибка добавления: " + e.message);
         }
-        setAppointments(prev => [...prev, newAppointment]);
     }
 
+
     // редактирование записи 
-    const handleEditAppointment = (data: AppointmentData) => {
+    const handleEditAppointment = async (data: AppointmentData) => {
         if(!editAppointment) return;
-        const updateAppointment = appointments.map(app => 
-            app === editAppointment ? { ...data, date: app.date } : app
-        );
-        setAppointments(updateAppointment);
-        setEditAppointment(null);
+        try {
+            await updateAppointment(editAppointment.id, { ...data, date: editAppointment.date });
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+            setEditAppointment(null);
+        } catch (e: any) {
+            alert("Ошибка изменения: " + e.message);
+        }
     }
 
     // удаление записи
-    const handleDeleteAppointment = (appointment: Appointment) => {
-        setAppointments(prev => prev.filter(app => app !== appointment))
+    const handleDeleteAppointment = async (appointment: Appointment) => {
+        try {
+            await deleteAppointment(appointment.id);
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+        } catch (e: any) {
+            alert("Ошибка удаления: " + e.message);
+        }
     }
 
     return (
