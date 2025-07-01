@@ -6,9 +6,9 @@ const Appointment = {
         const endMonth = month + 2;
         const end = endMonth > 12 
             ? `${year + 1}-01-01`
-            : `${year}-${String(month + 1).padStart(2, '0')}-01`;
+            : `${year}-${String(endMonth).padStart(2, '0')}-01`;
         const result = await pool.query(
-            'SELECT FROM appointments WHERE date >= $1 AND data < $2 ORDER BY date, time',
+            'SELECT * FROM appointments WHERE date >= $1 AND date < $2 ORDER BY date, time',
             [start, end]
         );
         return result.rows;
@@ -27,7 +27,7 @@ const Appointment = {
     async update(id, { clientName, service, time, price, comment, date }) {
         const result = await pool.query(
             `UPDATE appointments 
-             SET clientName = $1 service = $2 time = $3 price = $4 comment = $5 date = $6 
+             SET clientName = $1, service = $2, time = $3, price = $4, comment = $5, date = $6 
              WHERE id = $7
              RETURNING *`,
              [clientName, service, time, price, comment, date, id] 
