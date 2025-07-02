@@ -3,16 +3,38 @@ import type { AppointmentData, AppointmentFormProps } from "../../../types/appoi
 import "../../../styles/appointmentForm.css";
 
 
-const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose, initialData }) => {
+const AppointmentForm: React.FC<AppointmentFormProps> = ({ 
+    date, 
+    onSave, 
+    onClose, 
+    initialData,
+    isEditing = false,
+ }) => {
+    const formatDateLocal = (d: Date) => {
+        const year = d.getFullYear();
+        const month = String(d.getMonth() + 1).padStart(2, '0');
+        const day = String(d.getDate()).padStart(2, '0');
+        return `${year}-${month}-${day}`;
+    };
+
+    const formatTime = (timeString?: string): string => {
+        if (!timeString) return "";
+        const dateObj = new Date(timeString);
+        if (isNaN(dateObj.getTime())) return "";
+        return dateObj.toLocaleTimeString("ru-RU", {
+            hour12: false,
+            hour: "2-digit",
+            minute: "2-digit",
+        });
+    };
+
     const [form, setForm] = useState<AppointmentData>({
         clientName: initialData?.clientName || '',
         service: initialData?.service || '',
-        time: initialData?.time
-            ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
-            : '',
+        time: formatTime(initialData?.time),
         price: initialData?.price || '',
         comment: initialData?.comment || '',
-        date: date.toISOString().split('T')[0],
+        date: initialData?.date ?? formatDateLocal(date),
     });
 
      // При смене даты или initialData сбрасываем или обновляем форму
@@ -20,14 +42,12 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
         setForm({
             clientName: initialData?.clientName || '',
             service: initialData?.service || '',
-            time: initialData?.time
-                ? new Date(initialData.time).toLocaleTimeString('ru-RU', { hour12: false, hour: '2-digit', minute: '2-digit' })
-                : '',
+            time: formatTime(initialData?.time),
             price: initialData?.price || '',
             comment: initialData?.comment || '',
-            date: date.toISOString().split('T')[0],
+            date: initialData?.date ?? formatDateLocal(date),
         });
-    }, [date, initialData]);
+    }, [initialData, date]);
 
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement |
@@ -37,30 +57,25 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if(!form.clientName) {
-            alert('Нужно заполнить все поля');
+        if (!form.clientName.trim()) {
+            alert("Введите имя клиента");
             return;
         }
 
-        const dateTime = new Date(date);
-        const[hours, minutes] = form.time.split(':').map(Number);
-        dateTime.setHours(hours, minutes, 0, 0);
-
-        onSave({
-            clientName: form.clientName,
-            service: form.service,
-            time: form.time,
-            price: form.price,
-            comment: form.comment,
-            date: form.date,
-        })
-
-        if (!initialData) {
-            setForm({ clientName: '', service: '', time: '', price: '', comment: '', date: form.date });
+        onSave(form);
+        if (!isEditing) {
+            setForm({
+                clientName: "",
+                service: "",
+                time: "",
+                price: "",
+                comment: "",
+                date: form.date,
+            });
         }
-
+        
         onClose();
-    }
+    };
 
     return (
         <form className="appointment-form" onSubmit={handleSubmit} noValidate>

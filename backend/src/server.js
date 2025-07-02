@@ -1,7 +1,7 @@
-const express = require('express');
-const cors = require('cors');
-const notesRouter = require('./routes/notes.js');
-const appointmentRouter = require('./routes/appointments.js');
+import express from 'express';
+import cors from 'cors';
+import notesRouter from './routes/notes.js';
+import appointmentRouter from './routes/appointments.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;

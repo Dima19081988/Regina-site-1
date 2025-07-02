@@ -1,4 +1,4 @@
-const pool = require('../config/db.js');
+import pool from "../config/db.js";
 
 const Note = {
     async getAll() {
@@ -32,4 +32,4 @@ const Note = {
     }
 };
 
-module.exports = Note;
+export default Note;

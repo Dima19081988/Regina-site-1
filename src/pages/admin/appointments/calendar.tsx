@@ -19,6 +19,12 @@ function useIsMobile(breakpoint = 600) {
     return isMobile;
 }
 
+const formatDateLocal = (date: Date): string => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+};
 
 const Calendar: React.FC = () => {
     // состояния
@@ -41,7 +47,7 @@ const Calendar: React.FC = () => {
     // генерация календаря
     // подсветка сегодняшеного числа
     const today = new Date();
-    const todayStr = today.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+    const todayStr = formatDateLocal(today);
     // смена месяца
     const changeMonth = (offset: number) => {
         let newMonth = currentMonth + offset;
@@ -82,8 +88,8 @@ const Calendar: React.FC = () => {
     }
 
     // Обработчик клика по ячейке календаря
-    const handleCellClick = (dateStr: string) => {
-        setActiveDate(dateStr);
+    const handleCellClick = (date: Date) => {
+        setActiveDate(formatDateLocal(date));
         setEditAppointment(null);
     }
     // добавление новой записи
@@ -155,16 +161,19 @@ const Calendar: React.FC = () => {
                 {dates
                     .filter(date => date.getMonth() === currentMonth)
                     .map(date => {
-                        const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+                        const dateStr = formatDateLocal(date);
                         console.log('activeDate:', activeDate);
                         console.log('appointments:', appointments);
-                        const dayAppointments = appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate);
+                        const dayAppointments = appointments.filter(a => {
+                            const appointmentDate = formatDateLocal(new Date(a.date));
+                            return appointmentDate === dateStr;
+                        });
                         console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
                                 key={dateStr}
                                 className={`calendar-list-day ${dateStr === todayStr ? 'today' : ''}`}
-                                onClick={() => handleCellClick(dateStr)}
+                                onClick={() => handleCellClick(date)}
                             >
                                 <div className="list-date">
                                     <span className="list-date-number">{date.getDate()}</span>
@@ -187,11 +196,14 @@ const Calendar: React.FC = () => {
                         <div key={index} className="calendar-week-day">{day}</div>
                     ))}
                     {dates.map(date => {
-                        const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
+                        const dateStr = formatDateLocal(date);
                         const isCurrentMonth = date.getMonth() === currentMonth;
                         console.log('activeDate:', activeDate);
                         console.log('appointments:', appointments);
-                        const dayAppointments = appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate);
+                        const dayAppointments = appointments.filter(a => {
+                            const appointmentDate = formatDateLocal(new Date(a.date)); // ИСПРАВЛЕНО
+                            return appointmentDate === dateStr;
+                        });
                         console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
@@ -199,7 +211,7 @@ const Calendar: React.FC = () => {
                                 className={`calendar-day 
                                     ${dateStr === todayStr ? 'today' : ''}
                                     ${!isCurrentMonth ? 'other-month' : ''}`}
-                                onClick={() => handleCellClick(dateStr)}
+                                onClick={() => handleCellClick(date)}
                             >
                                 <div className="date-number">
                                     {date.getDate()}
@@ -239,19 +251,23 @@ const Calendar: React.FC = () => {
                         {/* список существующих записей */}
                         <div className="existing-appointments">
                             <h3>Существующие записи</h3>
-                            {appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate).length === 0 ? (
+                            {appointments.filter(a => formatDateLocal(new Date(a.date)) === activeDate).length === 0 ? (
                                 <p>Нет записей</p>
                             ) : (
                                 <ul>
                                     {appointments
-                                    .filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate)
-                                    .sort((a,b) => new Date(a.time).getTime() - new Date(b.time).getTime())
+                                    .filter(a => formatDateLocal(new Date(a.date)) === activeDate)
+                                    .sort((a, b) => {
+                                            const [aH, aM] = a.time.split(':').map(Number);
+                                            const [bH, bM] = b.time.split(':').map(Number);
+                                            return aH !== bH ? aH - bH : aM - bM;
+                                        })
                                     .map((appointment, index) => (
                                         <li key={index} className="appointment-item">
                                             <div className="appointment-indo">
                                                 <div><strong>{appointment.clientName}</strong></div>
                                                 <div>Услуга: {appointment.service}</div>
-                                                <div>Время: {appointment.time}</div>
+                                                <div>Время: {appointment.time.slice(0, 5)}</div>
                                                 <div>Цена: {appointment.price} ₽</div>
                                                 {appointment.comment && <div>Заметки: {appointment.comment}</div>}
                                             </div>

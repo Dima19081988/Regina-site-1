@@ -1,4 +1,4 @@
-const pool = require('../config/db.js');
+import pool from '../config/db.js';
 
 const Appointment = {
     async getAllByMonth(year, month) {
@@ -8,7 +8,17 @@ const Appointment = {
             ? `${year + 1}-01-01`
             : `${year}-${String(endMonth).padStart(2, '0')}-01`;
         const result = await pool.query(
-            'SELECT * FROM appointments WHERE date >= $1 AND date < $2 ORDER BY date, time',
+            `SELECT 
+                id,
+                clientname AS "clientName",
+                service,
+                time,
+                price,
+                comment,
+                date
+            FROM appointments
+            WHERE date >= $1 AND date < $2
+            ORDER BY date, time`,
             [start, end]
         );
         return result.rows;
@@ -16,22 +26,36 @@ const Appointment = {
 
     async create({ clientName, service, time, price, comment, date }) {
         const result = await pool.query(
-            `INSERT INTO appointments (clientName, service, time, price, comment, date) 
-             VALUES ($1, $2, $3, $4, $5, $6) 
-             RETURNING *`,
-            [clientName, service, time, price, comment, date]    
+            `INSERT INTO appointments (clientname, service, time, price, comment, date) 
+            VALUES ($1, $2, $3, $4, $5, $6) 
+            RETURNING 
+                id,
+                clientname AS "clientName",
+                service,
+                time,
+                price,
+                comment,
+                date`,
+            [clientName, service, time, price, comment, date]
         );
         return result.rows[0];
     },
 
     async update(id, { clientName, service, time, price, comment, date }) {
-        const result = await pool.query(
-            `UPDATE appointments 
-             SET clientName = $1, service = $2, time = $3, price = $4, comment = $5, date = $6 
-             WHERE id = $7
-             RETURNING *`,
-             [clientName, service, time, price, comment, date, id] 
-        );
+const result = await pool.query(
+      `UPDATE appointments 
+       SET clientname = $1, service = $2, time = $3, price = $4, comment = $5, date = $6 
+       WHERE id = $7
+       RETURNING 
+         id,
+         clientname AS "clientName",
+         service,
+         time,
+         price,
+         comment,
+         date`,
+      [clientName, service, time, price, comment, date, id]
+    );
         return result.rows[0]
     },
 
@@ -42,12 +66,21 @@ const Appointment = {
     },
 
     async findByDateAndTime(date, time) {
-        const result = await pool.query(
-            'SELECT * FROM appointments WHERE date = $1 AND time = $2',
-            [date, time]
-        );
+    const result = await pool.query(
+        `SELECT 
+            id,
+            clientname AS "clientName",
+            service,
+            time,
+            price,
+            comment,
+            date
+        FROM appointments 
+        WHERE date = $1 AND time = $2`,
+        [date, time]
+    );
         return result.rows[0];
     },
 };
 
-module.exports = Appointment;
+export default Appointment;

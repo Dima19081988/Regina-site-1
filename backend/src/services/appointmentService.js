@@ -1,4 +1,4 @@
-const Appointment = require('../models/appointment.js');
+import Appointment from '../models/appointment.js';
 
 const appointmentService = {
     async getAllByMonth(year, month) {
@@ -43,4 +43,4 @@ const appointmentService = {
     }
 }
 
-module.exports = appointmentService;
+export default appointmentService;

@@ -1,4 +1,4 @@
-const Note = require('../models/note.js');
+import Note from '../models/note.js';
 
 const noteService = {
     async getAllNotes() {
@@ -33,4 +33,4 @@ const noteService = {
     }
 };
 
-module.exports = noteService;
+export default noteService;

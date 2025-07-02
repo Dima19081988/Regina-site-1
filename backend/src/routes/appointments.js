@@ -1,10 +1,11 @@
-const express = require('express');
+import appointmentController from '../controllers/appointmentController.js';
+import express from 'express';
+
 const router = express.Router();
-const appointmentController = require('../controllers/appointmentController.js');
 
 router.get('/by-month', appointmentController.getByMonth);
 router.post('/', appointmentController.create);
 router.put('/:id', appointmentController.update);
 router.delete('/:id', appointmentController.remove);
 
-module.exports = router;
+export default router;

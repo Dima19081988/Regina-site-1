@@ -1,4 +1,4 @@
-const noteService = require('../services/noteService.js');
+import noteService from '../services/noteService.js';
 
 const noteController = {
     async getAll(req, res) {
@@ -51,4 +51,4 @@ const noteController = {
     }
 };
 
-module.exports = noteController;
+export default noteController;
