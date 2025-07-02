@@ -4,6 +4,9 @@ const appointmentController = {
     async getByMonth(req, res) {
         try {
             const { year, month } = req.query;
+            if (!year || !month) {
+                return res.status(400).json({ error: 'Год и месяц обязательны' });
+            }
             const result = await appointmentService.getAllByMonth(Number(year), Number(month));
             res.json(result);
         } catch (error) {
@@ -25,7 +28,7 @@ const appointmentController = {
         try {
             const { id } = req.params;
             const result = await appointmentService.update(id, req.body);
-            res.status(201).json(result);
+            res.status(200).json(result);
         } catch (e) {
             if (e.message && (
                 e.message.includes('обязательно') ||

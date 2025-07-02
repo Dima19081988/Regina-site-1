@@ -10,7 +10,9 @@ const appointmentService = {
         
         if(!clientName || !clientName.trim()) throw new Error('Имя обязательно к заполнению');
         if(!time) throw new Error('Время обязательно к заполнению');
-
+        if (!/^\d{2}:\d{2}$/.test(time)) throw new Error('Время должно быть в формате HH:mm');
+        if (!date) throw new Error('Дата обязательна к заполнению');
+        if (!/^\d{2}:\d{2}$/.test(time)) throw new Error('Время должно быть в формате HH:mm');
         const existing = await Appointment.findByDateAndTime(date, time);
         if(existing) throw new Error('На это время уже есть запись');
 
@@ -23,6 +25,9 @@ const appointmentService = {
 
         if (!clientName || !clientName.trim()) throw new Error('Имя клиента обязательно');
         if (!time) throw new Error('Время обязательно');
+        if (!date) throw new Error('Дата обязательна');
+        if (!/^\d{2}:\d{2}$/.test(time)) throw new Error('Время должно быть в формате HH:mm');
+        if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) throw new Error('Дата должна быть в формате YYYY-MM-DD');
 
         const existing = await Appointment.findByDateAndTime(date, time);
         if (existing && existing.id !== parseInt(id)) {

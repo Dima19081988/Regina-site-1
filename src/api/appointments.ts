@@ -5,7 +5,9 @@ const API_URL = "http://localhost:3000/api/appointments";
 export async function fetchAppointmentsByMonth(year: number, month: number): Promise<Appointment[]> {
     const res = await fetch(`${API_URL}/by-month?year=${year}&month=${month}`);
     if(!res.ok) throw new Error('Ошибка загрузки записей');
-    return res.json();
+    const data = await res.json();
+    console.log('Загруженные записи:', data);
+    return data;
 }
 
 export async function createAppointment(data: AppointmentData): Promise<Appointment> {

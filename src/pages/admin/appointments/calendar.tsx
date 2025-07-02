@@ -92,7 +92,10 @@ const Calendar: React.FC = () => {
         if (!activeDate) return;
         try {
             await createAppointment({ ...data, date: activeDate });
-            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
+                console.log('Appointments:', data);
+                setAppointments(data);
+            });
             setActiveDate(null);
         } catch (e: any) {
             alert("Ошибка добавления: " + e.message);
@@ -105,7 +108,10 @@ const Calendar: React.FC = () => {
         if(!editAppointment) return;
         try {
             await updateAppointment(editAppointment.id, { ...data, date: editAppointment.date });
-            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
+                console.log('Appointments:', data);
+                setAppointments(data);
+            });
             setEditAppointment(null);
         } catch (e: any) {
             alert("Ошибка изменения: " + e.message);
@@ -116,12 +122,15 @@ const Calendar: React.FC = () => {
     const handleDeleteAppointment = async (appointment: Appointment) => {
         try {
             await deleteAppointment(appointment.id);
-            fetchAppointmentsByMonth(currentYear, currentMonth).then(setAppointments);
+            fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
+                console.log('Appointments:', data);
+                setAppointments(data);
+            });
         } catch (e: any) {
             alert("Ошибка удаления: " + e.message);
         }
     }
-
+    //рендер
     return (
         <div className="calendar-container">
             <div className="calendar-header">
@@ -147,7 +156,10 @@ const Calendar: React.FC = () => {
                     .filter(date => date.getMonth() === currentMonth)
                     .map(date => {
                         const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
-                        const dayAppointments = appointments.filter(a => a.date === dateStr);
+                        console.log('activeDate:', activeDate);
+                        console.log('appointments:', appointments);
+                        const dayAppointments = appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate);
+                        console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
                                 key={dateStr}
@@ -177,8 +189,10 @@ const Calendar: React.FC = () => {
                     {dates.map(date => {
                         const dateStr = date.toLocaleDateString('ru-RU').split('.').reverse().join('-');
                         const isCurrentMonth = date.getMonth() === currentMonth;
-                        const dayAppointments = appointments.filter(a => a.date === dateStr)
-                    
+                        console.log('activeDate:', activeDate);
+                        console.log('appointments:', appointments);
+                        const dayAppointments = appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate);
+                        console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
                                 key={dateStr}
@@ -225,20 +239,19 @@ const Calendar: React.FC = () => {
                         {/* список существующих записей */}
                         <div className="existing-appointments">
                             <h3>Существующие записи</h3>
-                            {appointments.filter(a => a.date === activeDate).length === 0 ? (
+                            {appointments.filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate).length === 0 ? (
                                 <p>Нет записей</p>
                             ) : (
                                 <ul>
                                     {appointments
-                                    .filter(a => a.date === activeDate)
+                                    .filter(a => new Date(a.date).toISOString().split('T')[0] === activeDate)
                                     .sort((a,b) => new Date(a.time).getTime() - new Date(b.time).getTime())
                                     .map((appointment, index) => (
                                         <li key={index} className="appointment-item">
                                             <div className="appointment-indo">
                                                 <div><strong>{appointment.clientName}</strong></div>
                                                 <div>Услуга: {appointment.service}</div>
-                                                <div>Время: {new Date(appointment.time)
-                                                .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                                                <div>Время: {appointment.time}</div>
                                                 <div>Цена: {appointment.price} ₽</div>
                                                 {appointment.comment && <div>Заметки: {appointment.comment}</div>}
                                             </div>

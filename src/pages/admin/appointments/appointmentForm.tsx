@@ -49,7 +49,7 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({ date, onSave, onClose
         onSave({
             clientName: form.clientName,
             service: form.service,
-            time: dateTime.toISOString(),
+            time: form.time,
             price: form.price,
             comment: form.comment,
             date: form.date,
