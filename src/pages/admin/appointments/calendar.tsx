@@ -39,10 +39,16 @@ const Calendar: React.FC = () => {
     const isMobile = useIsMobile(600);
 
     useEffect(() => {
-    fetchAppointmentsByMonth(currentYear, currentMonth)
-        .then(setAppointments)
-        .catch(e => alert('Ошибка загрузки календаря' + e.message));
-    }, [currentYear, currentMonth])
+        fetchAppointmentsByMonth(currentYear, currentMonth)
+            .then(data => {
+                const normalizedData = data.map(a => ({
+                    ...a,
+                    date: formatDateLocal(new Date(a.date))
+                }));
+                setAppointments(normalizedData);
+            })
+            .catch(e => alert('Ошибка загрузки календаря: ' + e.message));
+    }, [currentYear, currentMonth]);
 
     // генерация календаря
     // подсветка сегодняшеного числа
@@ -99,8 +105,12 @@ const Calendar: React.FC = () => {
         try {
             await createAppointment({ ...data, date: activeDate });
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                console.log('Appointments:', data);
-                setAppointments(data);
+                const normalizedData = data.map(a => ({
+                    ...a,
+                    date: formatDateLocal(new Date(a.date))
+                }));
+            console.log('Appointments:', normalizedData);
+            setAppointments(normalizedData);
             });
             setActiveDate(null);
         } catch (e: any) {
@@ -115,9 +125,13 @@ const Calendar: React.FC = () => {
         try {
             await updateAppointment(editAppointment.id, { ...data, date: editAppointment.date });
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                console.log('Appointments:', data);
-                setAppointments(data);
-            });
+                const normalizedData = data.map(a => ({
+                    ...a,
+                    date: formatDateLocal(new Date(a.date))
+                }));
+            console.log('Appointments:', normalizedData);
+            setAppointments(normalizedData);
+            }); 
             setEditAppointment(null);
         } catch (e: any) {
             alert("Ошибка изменения: " + e.message);
@@ -129,13 +143,18 @@ const Calendar: React.FC = () => {
         try {
             await deleteAppointment(appointment.id);
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                console.log('Appointments:', data);
-                setAppointments(data);
+                const normalizedData = data.map(a => ({
+                    ...a,
+                    date: formatDateLocal(new Date(a.date))
+                }));
+            console.log('Appointments:', normalizedData);
+            setAppointments(normalizedData);
             });
         } catch (e: any) {
             alert("Ошибка удаления: " + e.message);
         }
     }
+    console.log('Rendering with appointments:', appointments);
     //рендер
     return (
         <div className="calendar-container">
@@ -164,10 +183,7 @@ const Calendar: React.FC = () => {
                         const dateStr = formatDateLocal(date);
                         console.log('activeDate:', activeDate);
                         console.log('appointments:', appointments);
-                        const dayAppointments = appointments.filter(a => {
-                            const appointmentDate = formatDateLocal(new Date(a.date));
-                            return appointmentDate === dateStr;
-                        });
+                        const dayAppointments = appointments.filter(a => a.date === dateStr);
                         console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
@@ -200,10 +216,7 @@ const Calendar: React.FC = () => {
                         const isCurrentMonth = date.getMonth() === currentMonth;
                         console.log('activeDate:', activeDate);
                         console.log('appointments:', appointments);
-                        const dayAppointments = appointments.filter(a => {
-                            const appointmentDate = formatDateLocal(new Date(a.date)); // ИСПРАВЛЕНО
-                            return appointmentDate === dateStr;
-                        });
+                        const dayAppointments = appointments.filter(a => a.date === dateStr);
                         console.log('Дата ячейки:', dateStr, 'Записи:', dayAppointments);
                         return (
                             <div
@@ -262,9 +275,9 @@ const Calendar: React.FC = () => {
                                             const [bH, bM] = b.time.split(':').map(Number);
                                             return aH !== bH ? aH - bH : aM - bM;
                                         })
-                                    .map((appointment, index) => (
-                                        <li key={index} className="appointment-item">
-                                            <div className="appointment-indo">
+                                    .map((appointment) => (
+                                        <li key={appointment.id} className="appointment-item">
+                                            <div className="appointment-info">
                                                 <div><strong>{appointment.clientName}</strong></div>
                                                 <div>Услуга: {appointment.service}</div>
                                                 <div>Время: {appointment.time.slice(0, 5)}</div>

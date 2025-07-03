@@ -19,13 +19,16 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
 
     const formatTime = (timeString?: string): string => {
         if (!timeString) return "";
-        const dateObj = new Date(timeString);
-        if (isNaN(dateObj.getTime())) return "";
-        return dateObj.toLocaleTimeString("ru-RU", {
-            hour12: false,
-            hour: "2-digit",
-            minute: "2-digit",
-        });
+        const [hours, minutes] = timeString.split(':');
+        if (!hours || !minutes) return "";
+        return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
+        // const dateObj = new Date(timeString);
+        // if (isNaN(dateObj.getTime())) return "";
+        // return dateObj.toLocaleTimeString("ru-RU", {
+        //     hour12: false,
+        //     hour: "2-digit",
+        //     minute: "2-digit",
+        // });
     };
 
     const [form, setForm] = useState<AppointmentData>({

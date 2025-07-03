@@ -1,5 +1,5 @@
 import appointmentService from '../services/appointmentService.js';
-import { keysToCamel } from '../utils/caseConverter.js';
+// import { keysToCamel } from '../utils/caseConverter.js';
 
 const appointmentController = {
     async getByMonth(req, res) {
@@ -9,7 +9,7 @@ const appointmentController = {
                 return res.status(400).json({ error: 'Год и месяц обязательны' });
             }
             const result = await appointmentService.getAllByMonth(Number(year), Number(month));
-            res.json(keysToCamel(result));
+            res.json(result);
         } catch (error) {
             console.error("Ошибка получения записей:", error);
             res.status(500).json({ error: "Ошибка сервера при получении записей" });
@@ -19,7 +19,7 @@ const appointmentController = {
     async create(req, res) {
         try {
             const result = await appointmentService.create(req.body);
-            res.status(201).json(keysToCamel(result));
+            res.status(201).json(result);
         } catch (e) {
             res.status(400).json({ error: e.message }); 
         }
@@ -29,7 +29,7 @@ const appointmentController = {
         try {
             const { id } = req.params;
             const result = await appointmentService.update(id, req.body);
-            res.status(200).json(keysToCamel(result));
+            res.status(200).json(result);
         } catch (e) {
             if (e.message && (
                 e.message.includes('обязательно') ||
