@@ -46,27 +46,11 @@ const Calendar: React.FC = () => {
         fetchAppointmentsByMonth(currentYear, currentMonth)
             .then(data => {
                 console.log('Raw data from server:', data);
-                const normalizedData = data.map(a => {
-                // Проверяем, есть ли date и является ли оно строкой
-                    if (!a.date || typeof a.date !== 'string') {
-                        console.error('Invalid or missing date:', a);
-                        return { ...a, date: formatDateLocal(new Date()) }; // Запасная дата
-                    }
-                const dateObj = new Date(a.date);
-                // Проверяем, валидна ли дата
-                    if (isNaN(dateObj.getTime())) {
-                        console.error('Cannot parse date:', a.date, a);
-                        return { ...a, date: formatDateLocal(new Date()) }; // Запасная дата
-                    }
-                return {
-                    ...a,
-                    date: formatDateLocal(dateObj)
-                };
-                });
-                setAppointments(normalizedData);
+                setAppointments(data);
             })
             .catch(e => alert('Ошибка загрузки календаря: ' + e.message));
     }, [currentYear, currentMonth]);
+
 
     // генерация календаря
     // подсветка сегодняшеного числа
@@ -122,12 +106,7 @@ const Calendar: React.FC = () => {
         try {
             await createAppointment({ ...data, date: activeDate });
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                const normalizedData = data.map(a => ({
-                    ...a,
-                    date: formatDateLocal(new Date(a.date))
-                }));
-            console.log('Appointments:', normalizedData);
-            setAppointments(normalizedData);
+            setAppointments(data);
             });
             setActiveDate(null);
         } catch (e: any) {
@@ -142,12 +121,7 @@ const Calendar: React.FC = () => {
         try {
             await updateAppointment(editAppointment.id, { ...data, date: editAppointment.date });
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                const normalizedData = data.map(a => ({
-                    ...a,
-                    date: formatDateLocal(new Date(a.date))
-                }));
-            console.log('Appointments:', normalizedData);
-            setAppointments(normalizedData);
+            setAppointments(data);
             }); 
             setEditAppointment(null);
         } catch (e: any) {
@@ -160,12 +134,7 @@ const Calendar: React.FC = () => {
         try {
             await deleteAppointment(appointment.id);
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
-                const normalizedData = data.map(a => ({
-                    ...a,
-                    date: formatDateLocal(new Date(a.date))
-                }));
-            console.log('Appointments:', normalizedData);
-            setAppointments(normalizedData);
+            setAppointments(data);
             });
         } catch (e: any) {
             alert("Ошибка удаления: " + e.message);

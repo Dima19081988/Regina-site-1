@@ -15,7 +15,7 @@ const Appointment = {
                 time,
                 price,
                 comment,
-                date AS date
+                TO_CHAR(date, 'YYYY-MM-DD') AS date
             FROM appointments
             WHERE date >= $1 AND date < $2
             ORDER BY date, time`,
@@ -35,7 +35,7 @@ const Appointment = {
                 time,
                 price,
                 comment,
-                date AS date`,
+                TO_CHAR(date, 'YYYY-MM-DD') AS date`,
             [clientName, service, time, price, comment, date]
         );
         return result.rows[0];
@@ -53,7 +53,7 @@ const result = await pool.query(
          time,
          price,
          comment,
-         date AS date`,
+         TO_CHAR(date, 'YYYY-MM-DD') AS date`,
       [clientName, service, time, price, comment, date, id]
     );
         return result.rows[0]
@@ -74,7 +74,7 @@ const result = await pool.query(
             time,
             price,
             comment,
-            date AS date
+            TO_CHAR(date, 'YYYY-MM-DD') AS date
         FROM appointments 
         WHERE date = $1 AND time = $2`,
         [date, time]
