@@ -20,6 +20,10 @@ function useIsMobile(breakpoint = 600) {
 }
 
 const formatDateLocal = (date: Date): string => {
+    if (!(date instanceof Date) || isNaN(date.getTime())) {
+        console.error('Invalid date:', date);
+        return formatDateLocal(new Date());
+    }
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, '0');
     const day = String(date.getDate()).padStart(2, '0');
@@ -41,10 +45,24 @@ const Calendar: React.FC = () => {
     useEffect(() => {
         fetchAppointmentsByMonth(currentYear, currentMonth)
             .then(data => {
-                const normalizedData = data.map(a => ({
+                console.log('Raw data from server:', data);
+                const normalizedData = data.map(a => {
+                // Проверяем, есть ли date и является ли оно строкой
+                    if (!a.date || typeof a.date !== 'string') {
+                        console.error('Invalid or missing date:', a);
+                        return { ...a, date: formatDateLocal(new Date()) }; // Запасная дата
+                    }
+                const dateObj = new Date(a.date);
+                // Проверяем, валидна ли дата
+                    if (isNaN(dateObj.getTime())) {
+                        console.error('Cannot parse date:', a.date, a);
+                        return { ...a, date: formatDateLocal(new Date()) }; // Запасная дата
+                    }
+                return {
                     ...a,
-                    date: formatDateLocal(new Date(a.date))
-                }));
+                    date: formatDateLocal(dateObj)
+                };
+                });
                 setAppointments(normalizedData);
             })
             .catch(e => alert('Ошибка загрузки календаря: ' + e.message));
@@ -99,7 +117,6 @@ const Calendar: React.FC = () => {
         setEditAppointment(null);
     }
     // добавление новой записи
-
     const handleAddAppointment = async (data: AppointmentData) => {
         if (!activeDate) return;
         try {
@@ -264,12 +281,12 @@ const Calendar: React.FC = () => {
                         {/* список существующих записей */}
                         <div className="existing-appointments">
                             <h3>Существующие записи</h3>
-                            {appointments.filter(a => formatDateLocal(new Date(a.date)) === activeDate).length === 0 ? (
+                            {appointments.filter(a => a.date === activeDate).length === 0 ? (
                                 <p>Нет записей</p>
                             ) : (
                                 <ul>
                                     {appointments
-                                    .filter(a => formatDateLocal(new Date(a.date)) === activeDate)
+                                    .filter(a => a.date === activeDate)
                                     .sort((a, b) => {
                                             const [aH, aM] = a.time.split(':').map(Number);
                                             const [bH, bM] = b.time.split(':').map(Number);

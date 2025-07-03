@@ -1,5 +1,4 @@
 import appointmentService from '../services/appointmentService.js';
-// import { keysToCamel } from '../utils/caseConverter.js';
 
 const appointmentController = {
     async getByMonth(req, res) {
