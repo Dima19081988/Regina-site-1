@@ -40,6 +40,11 @@ const appointmentService = {
     async delete(id) {
         if (!id) throw new Error('ID записи не указан');
         await Appointment.delete(id);
+    },
+
+    async findByDateAndTime(date, time) {
+        const formattedTime = time.slice(0, 5);
+        return await Appointment.findByDateAndTime(date, formattedTime);
     }
 }
 

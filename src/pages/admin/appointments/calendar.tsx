@@ -266,7 +266,7 @@ const Calendar: React.FC = () => {
                                             <div className="appointment-info">
                                                 <div><strong>{appointment.clientName}</strong></div>
                                                 <div>Услуга: {appointment.service}</div>
-                                                <div>Время: {appointment.time.slice(0, 5)}</div>
+                                                <div>Время: {appointment.time}</div>
                                                 <div>Цена: {appointment.price} ₽</div>
                                                 {appointment.comment && <div>Заметки: {appointment.comment}</div>}
                                             </div>
