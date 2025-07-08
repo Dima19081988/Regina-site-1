@@ -19,7 +19,7 @@ export const formatTime = (timeString?: string): string => {
 export const generateTimeOptions = (start = 9, end = 22, step = 10) => {
     const options = [];
     for (let hour = start; hour <= end; hour++) {
-        for (let minute = 0; minute <= 60; minute += step) {
+        for (let minute = 0; minute < 60; minute += step) {
             const h = String(hour).padStart(2, '0');
             const m = String(minute).padStart(2, '0');
             options.push(`${h}:${m}`);
