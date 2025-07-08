@@ -4,7 +4,7 @@ import { fetchNotes, createNote, updateNote, deleteNote } from "../../api/notes.
 import type { Note } from "../../types/notes.ts";
 import "../../styles/notes.css";
 
-const notesPage: React.FC = () => {
+const NotesPage: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
     const [error, setError] = useState<string | null>(null);
@@ -42,8 +42,12 @@ const notesPage: React.FC = () => {
             setNotes(prev => [newNote, ...prev]);
             setTitle('');
             setContent('');
-        } catch (err: any) {
-            setSubmitError(err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setSubmitError(err.message);
+            } else {
+                setSubmitError('Ошибка добавления заметки');
+            }
         } finally {
             setSubmitting(false);
         }
@@ -78,8 +82,12 @@ const notesPage: React.FC = () => {
                 setNotes(notes.map(n => n.id === editId ? updated : n));
                 cancelEdit();
             }
-        } catch(err: any) {
-            setSubmitError(err.message);    
+        } catch(err: unknown) {
+            if (err instanceof Error) {
+                setSubmitError(err.message);
+            } else {
+                setSubmitError('Ошибка сохранения заметки');
+            }  
         } finally {
             setSubmitting(false);    
         }
@@ -92,8 +100,12 @@ const notesPage: React.FC = () => {
         try {
             await deleteNote(id);
             setNotes(notes.filter(n => n.id !== id));
-        } catch (err: any) {
-            alert('Ошибка при удалении: ' + err.message);
+        } catch (err: unknown) {
+            if (err instanceof Error) {
+                setSubmitError(err.message);
+            } else {
+                setSubmitError('Ошибка удаления заметки');
+            }
         } finally {
             setDeletingId(null)
         }
@@ -174,4 +186,4 @@ const notesPage: React.FC = () => {
     );
 };
 
-export default notesPage;
+export default NotesPage;

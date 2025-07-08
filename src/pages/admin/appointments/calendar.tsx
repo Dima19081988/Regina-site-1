@@ -68,8 +68,12 @@ const Calendar: React.FC = () => {
             setAppointments(data);
             });
             setActiveDate(null);
-        } catch (e: any) {
-            alert("Ошибка добавления: " + e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert("Ошибка добавления: " + e.message);
+            } else {
+                alert("Неизвестная ошибка");
+            }
         }
     }
 
@@ -82,8 +86,12 @@ const Calendar: React.FC = () => {
             setAppointments(data);
             }); 
             setEditAppointment(null);
-        } catch (e: any) {
-            alert("Ошибка изменения: " + e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert("Ошибка добавления: " + e.message);
+            } else {
+                alert("Неизвестная ошибка");
+            }
         }
     }
 
@@ -94,8 +102,12 @@ const Calendar: React.FC = () => {
             fetchAppointmentsByMonth(currentYear, currentMonth).then(data => {
             setAppointments(data);
             });
-        } catch (e: any) {
-            alert("Ошибка удаления: " + e.message);
+        } catch (e: unknown) {
+            if (e instanceof Error) {
+                alert("Ошибка добавления: " + e.message);
+            } else {
+                alert("Неизвестная ошибка");
+            }
         }
     }
     console.log('Rendering with appointments:', appointments);
