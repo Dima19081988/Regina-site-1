@@ -1,5 +1,5 @@
 import React from "react";
-import Calendar from "./calendar";
+import Calendar from "./calendar.tsx";
 import "../../../styles/appointmentsPage.css"
 
 const AppointmentsPage: React.FC = () => {

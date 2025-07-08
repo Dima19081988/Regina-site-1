@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import type { AppointmentData, AppointmentFormProps } from "../../../types/appointments";
+import type { AppointmentData, AppointmentFormProps } from "../../../types/appointments.ts";
 import "../../../styles/appointmentForm.css";
-import { formatDateLocal } from "../../../utils/calendarUtils";
-import { formatTime } from "../../../utils/calendarUtils";
-import { generateTimeOptions } from "../../../utils/calendarUtils";
+import { formatDateLocal } from "../../../utils/calendarUtils.ts";
+import { formatTime } from "../../../utils/calendarUtils.ts";
+import { generateTimeOptions } from "../../../utils/calendarUtils.ts";
 
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ 

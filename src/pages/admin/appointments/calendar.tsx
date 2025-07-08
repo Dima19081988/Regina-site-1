@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from "react";
-import AppointmentForm from "./appointmentForm";
-import type { Appointment, AppointmentData } from "../../../types/appointments";
+import AppointmentForm from "./appointmentForm.tsx";
+import type { Appointment, AppointmentData } from "../../../types/appointments.ts";
 import { 
     fetchAppointmentsByMonth, 
     createAppointment, 
     updateAppointment, 
-    deleteAppointment } from "../../../api/appointments";
+    deleteAppointment } from "../../../api/appointments.ts";
 import "../../../styles/calendar.css";
-import { useIsMobile } from "../../../hooks/useIsMobile";
-import { formatDateLocal } from "../../../utils/calendarUtils";
-import { generateCalendarDates } from "../../../utils/calendarUtils";
+import { useIsMobile } from "../../../hooks/useIsMobile.ts";
+import { formatDateLocal } from "../../../utils/calendarUtils.ts";
+import { generateCalendarDates } from "../../../utils/calendarUtils.ts";
 
 const Calendar: React.FC = () => {
     // состояния
