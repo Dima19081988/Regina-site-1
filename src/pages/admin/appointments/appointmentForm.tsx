@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from "react";
 import type { AppointmentData, AppointmentFormProps } from "../../../types/appointments";
 import "../../../styles/appointmentForm.css";
+import { formatDateLocal } from "../../../utils/calendarUtils";
+import { formatTime } from "../../../utils/calendarUtils";
+import { generateTimeOptions } from "../../../utils/calendarUtils";
 
 
 const AppointmentForm: React.FC<AppointmentFormProps> = ({ 
@@ -10,20 +13,9 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
     initialData,
     isEditing = false,
  }) => {
-    const formatDateLocal = (d: Date) => {
-        const year = d.getFullYear();
-        const month = String(d.getMonth() + 1).padStart(2, '0');
-        const day = String(d.getDate()).padStart(2, '0');
-        return `${year}-${month}-${day}`;
-    };
 
-    const formatTime = (timeString?: string): string => {
-        if (!timeString) return "";
-        const [hours, minutes] = timeString.split(':');
-        if (!hours || !minutes) return "";
-        return `${hours.padStart(2, '0')}:${minutes.padStart(2, '0')}`;
-    };
-
+    const timeOptions = generateTimeOptions();
+    
     const [form, setForm] = useState<AppointmentData>({
         clientName: initialData?.clientName || '',
         service: initialData?.service || '',
@@ -112,13 +104,17 @@ const AppointmentForm: React.FC<AppointmentFormProps> = ({
                 step={0.01}
             />
             <label htmlFor="time">Время записи</label>
-            <input
-                id="time" 
-                type="time" 
+            <select
+                id="time"  
                 name="time"
                 value={form.time}
                 onChange={handleChange}
-            />
+            >
+                <option value='' disabled>Выберите время</option>
+                {timeOptions.map((t) => (
+                    <option key={t} value={t}>{t}</option>
+                ))}
+            </select>
             <label htmlFor="comment">Комментарий</label>
             <textarea 
                 id="comment"   

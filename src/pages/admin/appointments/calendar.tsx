@@ -7,28 +7,9 @@ import {
     updateAppointment, 
     deleteAppointment } from "../../../api/appointments";
 import "../../../styles/calendar.css";
-
-function useIsMobile(breakpoint = 600) {
-    const [isMobile, setIsMobile] = useState(() => window.innerWidth < breakpoint);
-    useEffect(() => {
-        const handler = () => setIsMobile(window.innerWidth < breakpoint);
-        window.addEventListener('resize', handler);
-        return () => window.removeEventListener('resize', handler);
-    }, [breakpoint]);
-
-    return isMobile;
-}
-
-const formatDateLocal = (date: Date): string => {
-    if (!(date instanceof Date) || isNaN(date.getTime())) {
-        console.error('Invalid date:', date);
-        return formatDateLocal(new Date());
-    }
-    const year = date.getFullYear();
-    const month = String(date.getMonth() + 1).padStart(2, '0');
-    const day = String(date.getDate()).padStart(2, '0');
-    return `${year}-${month}-${day}`;
-};
+import { useIsMobile } from "../../../hooks/useIsMobile";
+import { formatDateLocal } from "../../../utils/calendarUtils";
+import { generateCalendarDates } from "../../../utils/calendarUtils";
 
 const Calendar: React.FC = () => {
     // состояния
@@ -51,7 +32,6 @@ const Calendar: React.FC = () => {
             .catch(e => alert('Ошибка загрузки календаря: ' + e.message));
     }, [currentYear, currentMonth]);
 
-
     // генерация календаря
     // подсветка сегодняшеного числа
     const today = new Date();
@@ -71,29 +51,8 @@ const Calendar: React.FC = () => {
         setCurrentYear(newYear);
         setActiveDate(null);
     }
-    // количество дней в месяце
-    const dayInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
-    // первый день месяца
-    const firstDay = new Date(currentYear, currentMonth, 1);
-    // смещение для понедельника
-    const startOffset = firstDay.getDay() === 0 ? 6 : firstDay.getDay() - 1;
-    // генерация массива дат
-    const dates: Date[] = [];
-    // добавляем дни пред.месяца
-    for (let i = startOffset; i > 0; i--) {
-        const prevDate = new Date(currentYear, currentMonth, 1 - i);
-        dates.push(prevDate);
-    }
-    // добавляем дни текущего месяца
-    for (let i = 1; i <= dayInMonth; i++) {
-        dates.push(new Date(currentYear, currentMonth, i));
-    }
-    // добавляем дни следующего месяца
-    const totalCells = 42;
-    const nextDays = totalCells - dates.length;
-    for (let i = 1; i <= nextDays; i++) {
-        dates.push(new Date(currentYear, currentMonth + 1, i));
-    }
+
+    const dates = generateCalendarDates(currentYear, currentMonth);
 
     // Обработчик клика по ячейке календаря
     const handleCellClick = (date: Date) => {
@@ -113,7 +72,6 @@ const Calendar: React.FC = () => {
             alert("Ошибка добавления: " + e.message);
         }
     }
-
 
     // редактирование записи 
     const handleEditAppointment = async (data: AppointmentData) => {
@@ -141,6 +99,7 @@ const Calendar: React.FC = () => {
         }
     }
     console.log('Rendering with appointments:', appointments);
+
     //рендер
     return (
         <div className="calendar-container">
