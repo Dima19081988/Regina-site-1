@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import notesRouter from './routes/notes.js';
 import appointmentRouter from './routes/appointments.js';
+import attachmentRouter from './routes/attachments.js';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -16,6 +17,7 @@ app.use(express.json())
 
 app.use('/notes', notesRouter);
 app.use('/api/appointments', appointmentRouter);
+app.use('/api/attachments', attachmentRouter)
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
@@ -24,13 +26,4 @@ app.listen(PORT, () => {
 });
 
 
-// тестовый
-// app.get('/test-db', async (req, res) => {
-//   try {
-//     const result = await pool.query('SELECT NOW()');
-//     res.json({ serverTime: result.rows[0].now });
-//   } catch (error) {
-//     res.status(500).json({ error: error.message });
-//   }
-// });
 
