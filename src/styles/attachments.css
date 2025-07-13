@@ -1,0 +1,117 @@
+.attachments-container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 24px;
+    background: #fff;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+}
+
+.attachments-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+/* Каждый элемент списка — flex-контейнер с вертикальным расположением */
+.attachments-list li {
+    border-bottom: 1px solid #eee;
+    padding: 16px 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+/* Изображения с ограничением по ширине */
+.attachments-list img {
+    max-width: 200px;
+    width: 100%;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+    object-fit: contain;
+}
+
+/* Ссылки на скачивание и предпросмотр */
+.attachments-list a {
+    color: #1976d2;
+    text-decoration: none;
+    margin-right: 12px;
+    font-weight: 500;
+}
+
+.attachments-list a:hover {
+    text-decoration: underline;
+}
+
+/* Стили для загрузки файла */
+.file-upload input[type="file"] {
+    margin-bottom: 8px;
+}
+
+.file-upload span {
+    margin-left: 12px;
+    color: #d32f2f;
+}
+
+/* --- Медиазапрос для экранов до 600px (мобильные) --- */
+@media (max-width: 600px) {
+    .attachments-container {
+        padding: 12px;
+        max-width: 100%;
+        border-radius: 0;
+        box-shadow: none;
+    }
+
+  /* Список становится вертикальным с небольшими отступами */
+    .attachments-list {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+  /* Каждый элемент списка — вертикальный блок */
+    .attachments-list li {
+        padding: 12px 0;
+        font-size: 15px;
+    }
+
+  /* Изображения занимают всю ширину контейнера */
+    .attachments-list img {
+        max-width: 100%;
+        height: auto;
+    }
+
+  /* Поле загрузки занимает всю ширину */
+    .file-upload input[type="file"] {
+        width: 100%;
+    }
+}
+
+/* --- Медиазапрос для планшетов (601px - 900px) --- */
+@media (min-width: 601px) and (max-width: 900px) {
+    .attachments-container {
+        max-width: 90%;
+        padding: 18px;
+    }
+
+  /* Список становится двухколоночным */
+    .attachments-list {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+  .attachments-list li {
+        flex: 1 1 calc(50% - 16px);
+        border-bottom: none;
+        border-right: 1px solid #eee;
+        padding: 16px;
+        box-sizing: border-box;
+    }
+
+  /* Убираем правую границу у последнего элемента в строке */
+    .attachments-list li:nth-child(2n) {
+        border-right: none;
+    }
+}

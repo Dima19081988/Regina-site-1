@@ -11,7 +11,7 @@ const isPreviewable = (mime?: string) =>
 
 const AttachmentList: React.FC<Props> = ({ attachments }) => {
     return (
-        <ul>
+        <ul className="attachments-list">
             {attachments.map((att) => (
                 <li key={att.id}>
                     <div>

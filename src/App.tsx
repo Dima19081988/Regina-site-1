@@ -9,6 +9,7 @@ import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";
 import AppointmentsPage from "./pages/admin/appointments/appointmentPage";
 import NotesPage from "./pages/admin/notes";
+import AttachmentsPage from "./pages/admin/attachments/attachmentPage";
 
 const AdminDashboard = React.lazy(() => import('./pages/admin/adminDashboard'));
 
@@ -68,6 +69,16 @@ function App() {
                   <AppointmentsPage />
                 </ProtectedRoute>
               }
+            />
+            <Route 
+              path="/admin/attachments" 
+              element={
+                <ProtectedRoute>
+                  <Suspense fallback={<div>Загрузка...</div>}>
+                    <AttachmentsPage />
+                  </Suspense>
+                </ProtectedRoute>
+              } 
             />
             <Route path="*" element={<Navigate to={"/"}/>}/>
           </Routes>
