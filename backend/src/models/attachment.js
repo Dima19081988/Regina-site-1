@@ -1,4 +1,4 @@
-import sequelize from "../config/sequelize.ts";
+import sequelize from "../config/sequelize.js";
 import { DataTypes } from "sequelize";
 
 const Attachment = sequelize.define('Attachment', {

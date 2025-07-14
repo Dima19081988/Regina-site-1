@@ -1,6 +1,6 @@
 import express from 'express';
 import multer from 'multer';
-import Attachment from '../models/attachment';
+import Attachment from '../models/attachment.js';
 
 const router = express.Router();
 const upload = multer();
@@ -44,10 +44,10 @@ router.get('/', async(req, res) => {
     try {
         const files = await Attachment.findAll({
             attributes: ['id', 'file_name', 'file_data', 'mime_type', 'size', 'created_at'],
-            order: [['created_at', 'DESK']]
+            order: [['created_at', 'DESC']]
         });
         res.json(files);
-    } catch {
+    } catch (error) {
         console.error('Ошибка загрузки списка', error);
         res.status(500).json({ error: 'Ошибка сервера при получении списка' })
     }
