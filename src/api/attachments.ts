@@ -21,6 +21,13 @@ export async function fetchAttachments(): Promise<Attachment[]> {
     return await res.json();
 }
 
+export async function deleteAttachment(id: number): Promise<void> {
+    const res = await fetch(`${API_URL}/${id}`, {
+        method: 'DELETE'
+    });
+    if(!res.ok) throw new Error('Ошибка удаления файла');
+}
+
 export function getAttachmentDownloadUrl(id: number) {
     return `${API_URL}/download/${id}`;
 }

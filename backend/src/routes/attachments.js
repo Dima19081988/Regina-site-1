@@ -17,10 +17,10 @@ router.post('/upload', upload.single('file'), async(req, res) => {
             mime_type: req.file.mimetype,
             size: req.file.size
         });
-        res.json({ id: attachment.id, file_name: attachment.file_name })
+        res.json({ id: attachment.id, file_name: attachment.file_name });
     } catch (error) {
-        console.error('Ошибка загрузки:', error)
-        res.status(500).json({ error: 'Ошибка сервера при загрузке файла' })
+        console.error('Ошибка загрузки:', error);
+        res.status(500).json({ error: 'Ошибка сервера при загрузке файла' });
     }
 });
 
@@ -36,7 +36,7 @@ router.get('/download/:id', async(req, res) => {
         res.send(attachment.file_data);
     } catch (error) {
         console.error('Ошибка скачивания', error);
-        res.status(500).json({ error: 'Ошибка сервера при скачивании файла' })
+        res.status(500).json({ error: 'Ошибка сервера при скачивании файла' });
     }
 });
 
@@ -49,7 +49,23 @@ router.get('/', async(req, res) => {
         res.json(files);
     } catch (error) {
         console.error('Ошибка загрузки списка', error);
-        res.status(500).json({ error: 'Ошибка сервера при получении списка' })
+        res.status(500).json({ error: 'Ошибка сервера при получении списка' });
+    }
+});
+
+router.delete('/:id', async(req, res) => {
+    try {
+        const id = req.params.id;
+        const attachment = await Attachment.findByPk(id);
+
+        if(!attachment) {
+            return res.status(404).json({ error: 'Файл не найден' });
+        }
+
+        await attachment.destroy();
+    } catch (error) {
+        console.error('Ошибка удаления файла', error);
+        res.status(500).json({ error: 'Ошибка сервера при удалении файла' })
     }
 })
 

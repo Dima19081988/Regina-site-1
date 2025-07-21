@@ -1,15 +1,17 @@
 import React from "react";
 import type{ Attachment } from "../../../types/attachments.ts";
 import { getAttachmentDownloadUrl } from "../../../api/attachments.ts";
+import { deleteAttachment } from "../../../api/attachments.ts";
 
 interface Props {
     attachments: Attachment[];
+    onDelete: () => void;
 }
 
 const isPreviewable = (mime?: string) =>
     mime?.startsWith("image/") || mime === "application/pdf";
 
-const AttachmentList: React.FC<Props> = ({ attachments }) => {
+const AttachmentList: React.FC<Props> = ({ attachments, onDelete}) => {
     return (
         <ul className="attachments-list">
             {attachments.map((att) => (
@@ -41,7 +43,21 @@ const AttachmentList: React.FC<Props> = ({ attachments }) => {
                         download={att.file_name}
                     >
                         Скачать
-                    </a>            
+                    </a>
+                    <button className="btn delete"
+                    onClick={async () => {
+                        if (window.confirm(`Удалить файл: '${att.file_name}'?`)) {
+                            try {
+                                await deleteAttachment(att.id);
+                                onDelete();
+                            } catch (error) {
+                                console.error('Ошибка удаления файла')
+                            }
+                        }
+                    }}
+                    >
+                        Удалить
+                    </button>            
                 </li>
             ))}
         </ul>   

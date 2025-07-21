@@ -35,7 +35,7 @@ const AttachmentsPage: React.FC = () => {
             </div>
             {loading && <p>Загрузка файлов...</p>}
             {error && <p>{error}</p>}
-            {!loading && <AttachmentList attachments={attachments} />}
+            {!loading && <AttachmentList attachments={attachments} onDelete={loadAttachments} />}
         </div>
     );
 };
