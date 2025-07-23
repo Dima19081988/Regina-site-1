@@ -208,12 +208,12 @@
 }
 
 .btn-delete {
-    background: #ff7875;
+    background-color: #ff7875;
     color: #fff;
 }
 
 .btn-delete:hover {
-    background: #d32f2f;
+    background-color: #d32f2f;
 }
 
 /* --- Мобильная адаптация календаря --- */

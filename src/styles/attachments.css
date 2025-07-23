@@ -64,27 +64,62 @@
         box-shadow: none;
     }
 
-  /* Список становится вертикальным с небольшими отступами */
     .attachments-list {
         flex-direction: column;
         gap: 12px;
     }
 
-  /* Каждый элемент списка — вертикальный блок */
     .attachments-list li {
-        padding: 12px 0;
-        font-size: 15px;
+        padding: 12px 8px;
+        font-size: 16px;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        flex-direction: column;
+        gap: 8px;
     }
 
-  /* Изображения занимают всю ширину контейнера */
     .attachments-list img {
         max-width: 100%;
         height: auto;
+        border-radius: 4px;
     }
 
-  /* Поле загрузки занимает всю ширину */
+    .attachments-list a {
+        color: #1976d2;
+        font-weight: 500;
+        margin-right: 0;
+        width: 100%;
+        text-align: left;
+    }
+
+    .attachments-list a:hover {
+        text-decoration: underline;
+    }
+
+    .delete-btn {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        background-color: #ff7875;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+        transition: background-color 0.3s ease;
+    }
+    .delete-btn:hover {
+        background-color: #d32f2f;
+    }
+
     .file-upload input[type="file"] {
         width: 100%;
+        margin-bottom: 8px;
+    }
+
+    .file-upload span {
+        margin-left: 12px;
+        color: #d32f2f;
     }
 }
 

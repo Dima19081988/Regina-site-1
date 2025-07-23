@@ -14,7 +14,7 @@ export const PriceList: React.FC = () => {
                             <tr>
                                 <th>Наименование</th>
                                 <th>Объем</th>
-                                <th>Стоимость (₽)</th>
+                                {/* <th>Стоимость (₽)</th> */}
                             </tr>
                         </thead>
                         <tbody>
@@ -22,7 +22,7 @@ export const PriceList: React.FC = () => {
                                 <tr key={service.id}>
                                     <td>{service.name}</td>
                                     <td>{service.volume}</td>
-                                    <td>{service.price.toLocaleString('ru-RU')}</td>
+                                    {/* <td>{service.price.toLocaleString('ru-RU')}</td> */}
                                 </tr>
                             ))}
                         </tbody>

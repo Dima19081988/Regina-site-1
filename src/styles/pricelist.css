@@ -31,8 +31,9 @@
 }
 
 .pricelist-table {
-    margin: 0 auto;  
+    /* margin: 0 auto;   */
     border-collapse: collapse;
+    width: 100%;
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     border-radius: 8px;
     overflow: hidden;

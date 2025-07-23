@@ -9,7 +9,7 @@ export type Category = {
     id: number;
     title: string;
     services: Service[];
-}
+};
 
 export const priceListData: Category[] = [
     {

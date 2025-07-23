@@ -44,7 +44,7 @@ const AttachmentList: React.FC<Props> = ({ attachments, onDelete}) => {
                     >
                         Скачать
                     </a>
-                    <button className="btn delete"
+                    <button className="delete-btn"
                     onClick={async () => {
                         if (window.confirm(`Удалить файл: '${att.file_name}'?`)) {
                             try {

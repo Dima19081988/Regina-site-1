@@ -116,14 +116,10 @@
 }
 
 .note-item button:last-child {
-    background-color: #d32f2f;
+    background-color: #ff7875;
 }
 
 .note-item button:last-child:hover {
-    background-color: #b71c1c;
+    background-color: #d32f2f;
 }
 
-/* Для кнопок рядом */
-.note-item button + button {
-    margin-left: 8px;
-}
