@@ -4,9 +4,11 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { TrendSection } from "./components/trendSection";
+import { Portfolio } from "./pages/portfolio"; 
 import { PriceList } from "./pages/priceList";
 import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";
+import { Calculator } from "./components/calculator";
 import AppointmentsPage from "./pages/admin/appointments/appointmentPage";
 import NotesPage from "./pages/admin/notes";
 import AttachmentsPage from "./pages/admin/attachments/attachmentPage";
@@ -39,8 +41,10 @@ function App() {
                 {!isAuthenticated && <TrendSection />}
              </>
            } />
+            <Route path="/portfolio" element={<Portfolio />}/>
             <Route path="/pricelist" element={<PriceList />}/>
-            <Route path="/trend/:id" element={<TrendDetail/>}/>
+            <Route path="/trend/:id" element={<TrendDetail />}/>
+            <Route path="/calculator" element={<Calculator />}/>
            {/* Админские маршруты */}
             <Route 
               path="/admin/dashboard" 

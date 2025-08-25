@@ -1,0 +1,97 @@
+.calculator {
+    width: 340px;
+    margin: 50px auto 0;
+    background-color: rgb(132, 105, 103);
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
+    box-shadow: 0 6px 32px rgba(44,44,84,0.2);
+}
+
+.display {
+    text-align: right;
+    background: rgb(132, 105, 103);
+    padding: 20px 10px 10px 20px;
+    min-height: 70px;
+    box-sizing: border-box;
+    color: #fff;
+}
+
+.display .prev {
+    min-height: 20px;
+    opacity: 0.6;
+    font-size: 1em;
+}
+
+.display .curr {
+    min-height: 30px;
+    letter-spacing: 1px;
+    font-size: 2em;
+    font-weight: bold;
+    overflow-x: auto;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(5, 50px);
+    gap: 0.5px;
+    background: #222327;
+}
+
+.buttons .zero {
+  grid-column: span 3;
+}
+
+.buttons button {
+    background: #fff;
+    font-size: 1.25em;
+    transition: background 0.3s;
+    cursor: pointer;
+    outline: none;
+}
+
+.buttons button:hover {
+  background: #e2e2e2;
+}
+
+.buttons button:active {
+  background: #b6b6b6;
+}
+
+.buttons button[disabled] {
+  color: #aaa;
+  background: #f0f0f0;
+  cursor: not-allowed;
+}
+
+@media (max-width: 480px) {
+    .calculator {
+      width: 96vw;
+      min-width: 0;
+      margin: 24px auto 0;
+      border-radius: 8px;
+    }
+
+    .display {
+      padding: 14px 8px 6px 12px;
+      min-height: 44px;
+      font-size: 0.95em;
+    }
+
+    .display .curr {
+      font-size: 1.5em;
+      min-height: 26px;
+    }
+
+    .buttons {
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(5, 65px);
+      gap: 1px;
+    }
+
+    .buttons button {
+      font-size: 1em;
+      padding: 0;
+    }
+
+}

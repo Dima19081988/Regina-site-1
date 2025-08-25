@@ -28,6 +28,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                     <Link to="/admin/appointments">Расписание</Link>
                     <Link to="/admin/notes">Заметки</Link>
                     <Link to="/admin/attachments">Дополнительные файлы</Link>
+                    <Link to="/calculator">Калькулятор</Link>
                     <button className="button logout" onClick={onLogout}>Выйти</button>
                 </>
                 ) : (
@@ -35,7 +36,7 @@ export const Header: React.FC<HeaderProps> = ({ isAdmin, onLogout, onLogin,
                     <div className="nav-left">
                         <Link to="/">Главная страница</Link>
                         <Link to="#biografy">Биография</Link>
-                        <Link to="#portfolio">Портфолио</Link>
+                        <Link to="/portfolio">Портфолио</Link>
                     </div>
                     <div className="nav-right">
                         <Link to="#articles">Статьи</Link>
