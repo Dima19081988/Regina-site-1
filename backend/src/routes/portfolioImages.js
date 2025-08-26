@@ -2,12 +2,11 @@ import express from 'express';
 import multer from 'multer';
 import PortfolioImage from '../models/portfolio.js';
 import pkg from 'easy-yandex-s3';
-const { EasyYandexS3 } = pkg;
+const EasyYandexS3 = pkg.default;
 
 const router = express.Router();
 const upload = multer();
 
-// Инициализация клиента Яндекс Облака
 const S3 = new EasyYandexS3({
   auth: {
     accessKeyId: process.env.YANDEX_ACCESS_KEY,
@@ -17,14 +16,12 @@ const S3 = new EasyYandexS3({
   debug: true,
 });
 
-// POST /api/portfolio-images/upload
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ error: 'Файл не загружен' });
     }
 
-    // Загружаем файл в бакет, можно указать папку например 'portfolio/'
     const result = await S3.Upload({
         buffer: req.file.buffer,
         name: req.file.originalname,
