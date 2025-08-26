@@ -1,0 +1,248 @@
+[33mcommit e1442098c86673908f84b0e1204e3897c9a49471[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m)[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Aug 26 11:56:02 2025 +0300
+
+    убрал ключи из поля видимости еще раз
+
+[33mcommit 545bfebec95a72ba6817236eb7d4a01e74e69367[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Aug 26 11:53:58 2025 +0300
+
+    убрал ключи из поля видимости
+
+[33mcommit ebf08e3290c9240c59ad91cb385c47397832ff93[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Aug 26 11:49:18 2025 +0300
+
+    Исключил backend/.env из репозитория, backend portfolio
+
+[33mcommit ff88f73df8ae87368ed157050faef63e343e3d45[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Mon Aug 25 11:24:47 2025 +0300
+
+    calculator css correction, start portfolio
+
+[33mcommit 752bd60f0ab635778680ed3c3953e18a12f0471d[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Wed Jul 23 12:11:02 2025 +0300
+
+    css correction
+
+[33mcommit 2b6602d40459eba76f3b0ba7eb48cc410aab1b97[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Mon Jul 21 17:36:09 2025 +0300
+
+    frontend attachments
+
+[33mcommit e80f884ac1ce3d42cc247f9a2dd72fc4a4a96fca[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Mon Jul 14 15:06:37 2025 +0300
+
+    frontend attachments
+
+[33mcommit 6168a145bf4959fcab3d060a467613595d7a879f[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jul 13 20:15:03 2025 +0300
+
+    frontend attachments
+
+[33mcommit ec59e737ef055c68e4cfab256497d3e86992e121[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Fri Jul 11 17:21:43 2025 +0300
+
+    frontend attachments
+
+[33mcommit d6cb32e0fba4a618830e318dc3e46b3ec4e0e831[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Fri Jul 11 12:28:11 2025 +0300
+
+    backend attachments
+
+[33mcommit e90638f8305b8c66ad0bdaaca1573cebdb119558[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 8 20:44:50 2025 +0300
+
+    начата работа backend attachments
+
+[33mcommit cdc75f287d1599d3e522931e25f31b577e88785b[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 8 16:43:52 2025 +0300
+
+    работа над ESLINT
+
+[33mcommit c26ddf97f7b5320ef57769bfb06d4881aadaa353[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 8 16:27:04 2025 +0300
+
+    работа над структурой calendar
+
+[33mcommit 3cb23f97360c12e3f808483c4e3f2e6e5dda5799[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 8 16:08:23 2025 +0300
+
+    работа над структурой calendar
+
+[33mcommit eef63d6c6fafa4dd5f607d877efc430ed9b50315[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 8 15:55:34 2025 +0300
+
+    работа над структурой calendar
+
+[33mcommit 68836a8a57846ccab30f2c83ee580150018908aa[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Fri Jul 4 08:28:17 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 9655ffa0faa5e0dc5b2f4c587794326b332185de[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Thu Jul 3 16:26:51 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit e5cafbf943fa014b692a214bfabeaa9e99443f2c[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Thu Jul 3 16:10:31 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit a53d817c9b5e37a122b2dba0fd8a35afc127bc72[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Thu Jul 3 10:04:17 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 082cc2f948b96a4c331fbf31f21f6457149d05e9[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Wed Jul 2 20:28:51 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 99bb0c88edeadc3b13847f388b4265ae33e5c25b[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Wed Jul 2 08:07:19 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 4ea6afa0cd2524967b44d07ddc4690b5865b253d[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jul 1 15:09:31 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit f9cd0f7d7532cf20af5edacafbc16d7b697354dd[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 29 16:30:45 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 3d253a4f074ac83239e363410753282d09d519f3[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sat Jun 28 16:40:12 2025 +0300
+
+    работа над backend appointment и notes
+
+[33mcommit a84870fb2e911c08d765d62f92020719ecffa990[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sat Jun 28 15:53:23 2025 +0300
+
+    работа над backend appointment и notes
+
+[33mcommit d873365847a7fa5371645346fe7fd45f3aa47676[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Thu Jun 26 17:44:36 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit b3fad8fb11b703c529b793bb1ab3e9e286cd0864[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Thu Jun 26 16:32:44 2025 +0300
+
+    работа над backend appointment
+
+[33mcommit 716ab0eeec5ce1ef3d6ed792ac3bba57878b13d0[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jun 24 19:53:30 2025 +0300
+
+    коррекция notes.tsx
+
+[33mcommit 4232861db2a8b15d53f972831f73cdcf48869087[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Tue Jun 24 16:18:37 2025 +0300
+
+    backend логика - notes
+
+[33mcommit b55f39645f8ca5e04087ccdf46e8d33ad0af256c[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 22 22:17:30 2025 +0300
+
+    notes.tsx
+
+[33mcommit 56593989917c725cd716b7e465d364c5a4115316[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 22 19:27:16 2025 +0300
+
+    начало логики notes
+
+[33mcommit b77a56d4969570ca8aa04d377655e88b7f8540f6[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 22 17:49:29 2025 +0300
+
+    интеграция с pg
+
+[33mcommit 67f81ff56433fbceac98f886b9c989cea4a950a9[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 22 15:59:54 2025 +0300
+
+    структура backend
+
+[33mcommit 2a6b1412010c99caf205541bca6154608fd171aa[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Sat Jun 21 17:37:10 2025 +0300
+
+    логика записи в календарь, добавлен Pricelist
+
+[33mcommit 0e568a859aa9a98251507599d061b2f8715e2b67[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Fri Jun 20 16:39:13 2025 +0300
+
+    работа над логикой календаря и записи
+
+[33mcommit 21bc038dedf44be2161a16f90048c5d44dc71ce6[m
+Author: Дмитрий К. <kuznetsovdv2013@gmail.com>
+Date:   Fri Jun 20 12:28:06 2025 +0300
+
+    работа над логикой календаря и записи
+
+[33mcommit a12e769543d1c2c7e2f75a63738fff7ac5b5ec1d[m
+Author: Dima Neto <kuznetsovdv2013@gmail.com>
+Date:   Tue Jun 17 23:11:57 2025 +0300
+
+    корректировка css
+
+[33mcommit 2cbdb01d9b6e504e57909f164e06d9a31290e597[m
+Author: Dima Neto <kuznetsovdv2013@gmail.com>
+Date:   Mon Jun 16 15:19:13 2025 +0300
+
+    изменения в header
+
+[33mcommit 28670034298d7acd3d6f40f98cc1953c691d4303[m
+Author: Dima Neto <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 15 23:55:40 2025 +0300
+
+    небольшие корректировки
+
+[33mcommit b199440e3fd875936a11b88ad82974ee5ca2f896[m
+Author: Dima Neto <kuznetsovdv2013@gmail.com>
+Date:   Mon Jun 9 23:03:15 2025 +0300
+
+    реализована логика admin/public
+
+[33mcommit 85807acdf1f77544f83f5f3cad37379620e21e05[m
+Author: Dima Neto <kuznetsovdv2013@gmail.com>
+Date:   Sun Jun 8 17:42:56 2025 +0300
+
+    добавил pages, переход на priceList
+
+[33mcommit 674563b6bf4616e4b13a866161cd1eb0a6555768[m
+Author: 
