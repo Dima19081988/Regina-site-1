@@ -1,7 +1,8 @@
 import express from 'express';
 import multer from 'multer';
-import PortfolioImage from '../models/portfolioImage.js';
-import { EasyYandexS3 } from 'easy-yandex-s3';
+import PortfolioImage from '../models/portfolio.js';
+import pkg from 'easy-yandex-s3';
+const { EasyYandexS3 } = pkg;
 
 const router = express.Router();
 const upload = multer();
