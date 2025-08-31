@@ -4,7 +4,7 @@ import { Routes, Route, Navigate } from "react-router-dom";
 import { Header } from "./components/header";
 import { Footer } from "./components/footer";
 import { TrendSection } from "./components/trendSection";
-import { Portfolio } from "./pages/portfolio"; 
+import { Portfolio } from "./pages/portfolio/portfolio"; 
 import { PriceList } from "./pages/priceList";
 import { Home } from "./pages/home";
 import { TrendDetail } from "./pages/trendDetail";

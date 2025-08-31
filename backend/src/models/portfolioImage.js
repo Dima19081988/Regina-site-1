@@ -37,6 +37,11 @@ const PortfolioImage = sequelize.define('PortfolioImage', {
     allowNull: false,
   },
 
+  file_key: {
+    type: DataTypes.STRING,
+    allowNull: false,
+  },
+
   file_url: {
     type: DataTypes.TEXT,
     allowNull: false,
