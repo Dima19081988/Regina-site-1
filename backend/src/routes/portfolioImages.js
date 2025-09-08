@@ -6,9 +6,8 @@ import pkg from 'easy-yandex-s3';
 import sequelize from '../config/sequelize.js';
 import PortfolioImage from '../models/portfolioImage.js';
 import Category from '../models/portfolioCategory.js';
-import { Category, PortfolioImage } from './models/portfolioassociations.js'; 
+import { Category, PortfolioImage } from './models/portfolioassociat.js'; 
 import authMiddleware from '../middleware/authMiddleware.js'; 
-import { assert, error } from 'console';
 
 const router = express.Router();
 const upload = multer({

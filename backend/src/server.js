@@ -5,7 +5,6 @@ import appointmentRouter from './routes/appointments.js';
 import attachmentRouter from './routes/attachments.js';
 import portfolioRouter from './routes/portfolioImages.js';
 import sequelize from './config/sequelize.js';
-import { Category, PortfolioImage } from './models/portfolioassociations.js'; 
 import dotenv from 'dotenv';
 dotenv.config();
 
