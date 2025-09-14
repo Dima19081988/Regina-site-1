@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { createCategory, updateCategory, deleteCategory } from "../../api/portfolio";
 import type { Category } from "../../types/portfolioData";
 import EditCategoryModal from "./modals/editCategoryModal";
@@ -76,7 +76,21 @@ const CategoryManagement: React.FC<CategoryManagementProps> = ({
                 ))}
             </div>
 
-            {showCreateModal}
+            {showCreateModal && (
+                <CreateCategoryModal
+                    onClose={() => setShowCreateModal(false)}
+                    onSubmit={() => handleCreateCategory}
+                />
+            )}
+            {editingCategory && (
+                <EditCategoryModal
+                    category={editingCategory}
+                    onClose={() => setEditingCategory(null)}
+                    onSubmit={() => handleUpdateCategory}
+                />
+            )}
         </div>
     )
 }
+
+export default CategoryManagement;

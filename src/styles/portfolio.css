@@ -1,57 +1,106 @@
-.portfolio-gallery {
-    padding: 40px 20px;
-    margin: 0 auto;
-    max-width: 960px;
+.portfolio-container {
+  padding: 20px;
 }
 
-.gallery-grid {
-    display: grid;
-    gap: 20px;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+.category-management,
+.image-management,
+.category-filter,
+.images-grid-container {
+  margin-bottom: 30px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
 }
 
-.portfolio-item {
-    background: rgb(132, 105, 103);
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    transition: transform 0.3s ease;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+.category-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 15px;
+  margin-top: 15px;
 }
 
-.portfolio-item:hover {
-    transform: scale(1.03);
+.category-item {
+  padding: 15px;
+  border: 1px solid #eee;
+  border-radius: 5px;
 }
 
-.portfolio-item img {
-    width: 100%;
-    height: 100px;
-    object-fit: cover;
-    display: block;
+.images-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
 }
 
-.item-descr {
-    padding: 15px;
+.image-item {
+  border: 1px solid #eee;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
-.item-descr h3 {
-    margin-bottom: 8px;
-    font-size: 1.2rem;
-    color: #a7535396;
+.image-item img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
 }
 
-.item-descr p {
-    font-size: 0.9rem;
-    color: #666;
-    margin: 0;
+.image-info {
+  padding: 15px;
 }
 
-@media (max-width: 600px) {
-    .gallery-grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-        gap: 12px;
-    }
-    .portfolio-item img {
-        height: 140px;
-    }
+.image-actions {
+  margin-top: 10px;
+}
+
+.category-filter button {
+  margin-right: 10px;
+  margin-bottom: 10px;
+  padding: 8px 15px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  background: #f5f5f5;
+  cursor: pointer;
+}
+
+.category-filter button.active {
+  background: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: white;
+  padding: 20px;
+  border-radius: 5px;
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal-actions {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+}
+
+.loading, .error, .empty-state {
+  text-align: center;
+  padding: 40px;
+  font-size: 18px;
+}
+
+.error {
+  color: #dc3545;
 }
