@@ -1,6 +1,6 @@
 import type { Attachment } from "../types/attachments.ts";
 
-const API_URL = "http://localhost:3000/api/attachments";
+const API_URL = "/api/attachments";
 
 export async function uploadAttachment(file: File): Promise<Attachment> {
     const formData = new FormData();

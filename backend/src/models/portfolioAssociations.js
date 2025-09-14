@@ -1,5 +1,5 @@
-import Category from "./portfolioCategory";
-import PortfolioImage from "./portfolioImage";
+import Category from './portfolioCategory.js';
+import PortfolioImage from './PortfolioImage.js';
 
-Category.hasMany(PortfolioImage, { foreignKey: 'category_id' });
-PortfolioImage.belongsTo(Category, { foreignKey: 'category_id' })
+Category.hasMany(PortfolioImage, { foreignKey: 'category_id', as: 'images' });
+PortfolioImage.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });

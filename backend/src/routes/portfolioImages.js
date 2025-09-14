@@ -4,10 +4,9 @@ import path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import pkg from 'easy-yandex-s3';
 import sequelize from '../config/sequelize.js';
-import PortfolioImage from '../models/portfolioImage.js';
 import Category from '../models/portfolioCategory.js';
-import { Category, PortfolioImage } from './models/portfolioassociat.js'; 
-import authMiddleware from '../middleware/authMiddleware.js'; 
+import PortfolioImage from '../models/PortfolioImage.js';
+import authMiddleware from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 const upload = multer({
@@ -36,7 +35,7 @@ const S3 = new EasyYandexS3({
 
 const deleteImageFromS3 = async (fileKey) => {
   try {
-    await S3.delete(fileKey);
+    await S3.Delete(fileKey);
     return true;
   } catch (error) {
     console.error('Ошибка удаления файла из S3:', error);

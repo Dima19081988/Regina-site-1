@@ -1,6 +1,6 @@
 import type { Note } from "../types/notes.ts";
 
-const API_URL = "http://localhost:3000/notes";
+const API_URL = "/notes";
 
 export async function fetchNotes(): Promise<Note[]> {
     const res = await fetch(API_URL);

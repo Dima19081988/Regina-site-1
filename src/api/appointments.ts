@@ -1,6 +1,6 @@
 import type { Appointment, AppointmentData } from "../types/appointments.ts";
 
-const API_URL = "http://localhost:3000/api/appointments";
+const API_URL = "/api/appointments";
 
 export async function fetchAppointmentsByMonth(year: number, month: number): Promise<Appointment[]> {
     const res = await fetch(`${API_URL}/by-month?year=${year}&month=${month}`);
