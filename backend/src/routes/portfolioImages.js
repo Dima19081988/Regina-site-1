@@ -44,7 +44,8 @@ const deleteImageFromS3 = async (fileKey) => {
 }
 
 // ==================== Categories CRUD ====================
-router.post('/categories', authMiddleware, async (req, res) => {
+// router.post('/categories', authMiddleware, async (req, res) => {
+router.post('/categories', async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     const { name, description } = req.body;
@@ -85,7 +86,8 @@ router.get('/categories', async (req, res) => {
     }
 });
 
-router.delete('/categories/:id', authMiddleware, async (req, res) => {
+// router.delete('/categories/:id', authMiddleware, async (req, res) => {
+router.delete('/categories/:id', async (req, res) => {
   const transaction = await sequelize.transaction();
     try {
       const category = await Category.findByPk(req.params.id, {
@@ -121,7 +123,8 @@ router.delete('/categories/:id', authMiddleware, async (req, res) => {
 });
 
 // Обновление категории
-router.patch('/categories/:id', authMiddleware, async (req, res) => {
+// router.patch('/images/:id', authMiddleware, async (req, res) => {
+router.patch('/categories/:id', async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     const category = await Category.findByPk(req.params.id);
@@ -144,7 +147,8 @@ router.patch('/categories/:id', authMiddleware, async (req, res) => {
 });
 
 // ==================== Image CRUD =======================
-router.post('/upload', upload.single('file'), authMiddleware, async (req, res) => {
+// router.post('/upload', upload.single('file'), authMiddleware, async (req, res) => {
+router.post('/upload', upload.single('file'), async (req, res) => {
   const transaction = await sequelize.transaction();
 
   let fileKey = null;
@@ -254,7 +258,8 @@ router.get('/images/:id', async (req, res) => {
   }
 });
 
-router.delete('/images/:id', authMiddleware, async (req, res) => {
+// router.delete('/images/:id', authMiddleware, async (req, res) => {
+router.delete('/images/:id', async (req, res) => {
   const transaction = await sequelize.transaction();
   try {
     const image = await PortfolioImage.findByPk(req.params.id, { transaction });
